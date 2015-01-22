@@ -4,8 +4,8 @@ namespace www\controllers;
 
 class Test
 {
-	public function test()
+	public function anyTestAction()
 	{
-		echo 'blop';
+		var_dump(\Core\Config::getCore('access_role_session_key'));
 	}
 }

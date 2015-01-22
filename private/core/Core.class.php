@@ -1,8 +1,8 @@
 <?php
+namespace Core;
 
 class Core
 {
-	static private $fc_instance = null;
 	static public $root = '';
 
 	static function init($dev=false)
@@ -12,17 +12,23 @@ class Core
 
 		spl_autoload_register(function($class)
 		{
-			$path = str_replace('\\', DIRECTORY_SEPARATOR, $class);
-			require_once(ROOT.DIRECTORY_SEPARATOR.'private.'.DIRECTORY_SEPARATOR.$path . '.class.php');
+			require_once(self::class2path($class));
 		});
+
+		Config::Init();
 	}
 
-	static function run()
+	static function class2path($class)
 	{
-		//self::$fc_instance = new FrontController();
-		//self::$fc_instance->routeTo($url);
+		$path = str_replace('\\', DIRECTORY_SEPARATOR, $class);
+		$path = explode('\\', $class);
+		$class = array_pop($path);
 
-		$t = new www\controllers\Test();
-		$t->test();
+		return ROOT.DIRECTORY_SEPARATOR.'private'.DIRECTORY_SEPARATOR.strtolower(join(DIRECTORY_SEPARATOR, $path)).DIRECTORY_SEPARATOR.ucfirst(strtolower($class)).'.class.php';
+	}
+
+	static function run($uri)
+	{
+		FrontController::routeTo($uri);
 	}
 }

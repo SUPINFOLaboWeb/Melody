@@ -1,0 +1,16 @@
+{
+	"access":
+	{
+		"role" : 
+		{
+			"session_key" : "role",
+			"if_missing" : 1
+		}
+	},
+	"session":
+	{
+		"error_varname" : "error",
+		"flash_varname" : "flash",
+		"content_varname" : "vars"
+	}
+}

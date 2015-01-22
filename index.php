@@ -1,7 +1,6 @@
 <?php
 	include('./private/core/Core.class.php');
 	
-	Core::Init(true);
-	var_dump(Core::$root);
-	Core::Run();
+	Core\Core::Init(true);
+	Core\Core::Run($_GET['q']);
 ?>
