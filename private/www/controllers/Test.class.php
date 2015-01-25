@@ -2,7 +2,7 @@
 
 namespace www\controllers;
 
-class TestController
+class TestController extends \Core\Controller
 {
 	public function anyTestAction()
 	{

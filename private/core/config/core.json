@@ -4,7 +4,8 @@
 		"role" : 
 		{
 			"session_key" : "role",
-			"if_missing" : 1
+			"if_missing" : 0,
+			"default" : 0
 		}
 	},
 	"session":

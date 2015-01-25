@@ -16,13 +16,15 @@ class FrontController
 		$data 		= self::parseURI($uri);
 		$class 		= 'www\\'.join('\\', $data['apps']).'controllers\\'.ucfirst(strtolower($data['controller']));
 		$class_alt 	= 'www\\'.join('\\', $data['apps']).$data['method'].'\\controllers\\'.ucfirst(strtolower($data['controller']));
+		$method 	= strtolower($_SERVER['REQUEST_METHOD']).ucfirst(strtolower($data['method'])).'Action';
+		$method_alt = 'any'.ucfirst(strtolower($data['method'])).'Action';
 
 		// le controller existe bien sinon 404
-		if(!file_exists(\Core\Core::class2path($class)))
+		if(!file_exists(Core::class2path($class)))
 		{
 			if($data['controller'] == 'default' && $data['method'] != 'index') 
 			{
-				if(!file_exists(\Core\Core::class2path($class_alt)))
+				if(!file_exists(Core::class2path($class_alt)))
 				{
 					self::throw_error(404, '/'.$uri);
 				}
@@ -32,17 +34,19 @@ class FrontController
 				}
 			}
 		}
-		$class .= 'Controller';
-		$page = new $class();
 
-		$method 	= strtolower($_SERVER['REQUEST_METHOD']).ucfirst(strtolower($data['method'])).'Action';
-		$method_alt = 'any'.ucfirst(strtolower($data['method'])).'Action';
+		$class .= 'Controller';
 
 		// la méthode existe bien sinon 404
-		if(!method_exists($page, $method))
+		if(!method_exists($class, $method))
 		{
-			if(!method_exists($page, $method_alt))
+			if(!method_exists($class, $method_alt))
 			{
+				if(file_exists(Core::class2path($class_alt)))
+				{
+					self::redirect(array_merge(array_filter($data['apps']), array($data['method'])), '', '', $data['args']);
+				}
+
 				self::throw_error(404, '/'.$uri);
 			}
 			else
@@ -50,6 +54,8 @@ class FrontController
 				$method = $method_alt;
 			}
 		}
+
+		$page = new $class();
 
 		self::$uri 				= $uri;
 		self::$apps 			= $data['apps'];
@@ -59,7 +65,7 @@ class FrontController
 
 		Config::loadFor($data['apps']);
 
-		$page->{$method}();
+		$page->{'__melody_invoke'}($method, array());
 	}
 
 	static function parseURI($uri)
@@ -93,7 +99,7 @@ class FrontController
 	static function throw_error($code, $msg)
 	{
 		var_dump($code.' : '.$msg);
-		exit;
+		exit();
 	}
 
 	static function redirect($apps = array(), $controller='', $method='', $args=array())
