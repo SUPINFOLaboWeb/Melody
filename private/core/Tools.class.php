@@ -32,8 +32,73 @@ class Tools
 		}
 	}
 
+	static function file_get_contents_loop($path, $files=array(), $sorted=false)
+	{
+		$buffer = array();
+		$dir = opendir($path);
+		while($file = readdir($dir))
+		{
+			if($file != '.' && $file != '..')
+			{
+				if(empty($files))
+				{
+					$buffer[basename($file, '.json')] = file_get_contents($path.DIRECTORY_SEPARATOR.$file);
+				}
+				else if(!is_array($files))
+				{
+					if($file == $files)
+					{
+						$buffer[basename($file, '.json')] = file_get_contents($path.DIRECTORY_SEPARATOR.$file);
+					}
+				}
+				else
+				{
+					if(in_array($file, $files))
+					{
+						$buffer[basename($file, '.json')] = file_get_contents($path.DIRECTORY_SEPARATOR.$file);
+					}
+				}
+			}
+		}
+		closedir($dir);
+
+		return ($sorted) ? sort($buffer) : $buffer;
+	}
+
 	static function is_assoc($array)
 	{
 		return (array_values($array) !== $array);
+	}
+
+	static function array_get_val($array, $path)
+	{
+		for($i=$array; $key=array_shift($path); $i=$i[$key]) 
+		{
+			if(!isset($i[$key])) return null;
+		}
+
+		return $i;
+	}
+
+	static function array_set_val(&$array, $path, $value)
+	{
+		for($i=&$array; $key=array_shift($path); $i=&$i[$key]) 
+		{
+			if(!isset($i[$key])) $i[$key] = array();
+		}
+		
+		$i = $val;
+	}
+
+	static function urlfor($apps=array(), $controller='', $method='', $args=array(), $absolute=true)
+	{
+		$domain = !is_null(Config::get('app_base_url')) ? Config::get('app_base_url') : strtolower(explode('/', $_SERVER['SERVER_PROTOCOL'])[0]).'://'.$_SERVER['HTTP_HOST'].'/';
+
+		return 	(($absolute) ? $domain : '')
+				.(empty($apps) ? '' : ((is_array($apps)) ? join('/', $apps).'/' : $apps.'/'))
+				.(empty($controller) && !empty($args) ? 'default' : (empty($controller) ? '' : $controller))
+				.(((empty($controller) && !empty($args)) || !(empty($controller)) && !(empty($method) && empty($args) && empty($controller))) ? '-' : '')
+				.(empty($method) && empty($args) && empty($controller) ? '': (empty($method) ? 'index' : $method))
+				.(empty($args) ? '' : '/'.((is_array($args)) ? join('/', $args) : $args));
 	}
 }

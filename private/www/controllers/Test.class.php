@@ -2,10 +2,10 @@
 
 namespace www\controllers;
 
-class Test
+class TestController
 {
 	public function anyTestAction()
 	{
-		var_dump(\Core\Config::getCore('access_role_session_key'));
+		var_dump(\Core\Config::getAll());
 	}
 }

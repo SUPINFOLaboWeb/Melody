@@ -20,11 +20,32 @@ class Core
 
 	static function class2path($class)
 	{
-		$path = str_replace('\\', DIRECTORY_SEPARATOR, $class);
-		$path = explode('\\', $class);
-		$class = array_pop($path);
+		//var_dump($class);
+		$old = $path 		= str_replace('\\', DIRECTORY_SEPARATOR, $class);
+		$path 		= explode('\\', $class);
+		$class 		= array_pop($path);
+		$container = array_pop($path);
+		$component 	= array_shift($path);
 
-		return ROOT.DIRECTORY_SEPARATOR.'private'.DIRECTORY_SEPARATOR.strtolower(join(DIRECTORY_SEPARATOR, $path)).DIRECTORY_SEPARATOR.ucfirst(strtolower($class)).'.class.php';
+		switch($container)
+		{
+			case 'controllers':
+				$class = str_replace('Controller', '', $class);
+			break;
+		}
+
+		if($component == 'www' && count($path) > 0)
+		{
+			$path = array_map(function($e){ return 'apps'.DIRECTORY_SEPARATOR.$e; }, $path);
+		}
+		$path[] = '';
+		
+
+		return  ROOT
+				.DIRECTORY_SEPARATOR.'private'
+				.DIRECTORY_SEPARATOR.strtolower($component)
+				.DIRECTORY_SEPARATOR.strtolower(join(DIRECTORY_SEPARATOR, $path)).strtolower($container)
+				.DIRECTORY_SEPARATOR.ucfirst(strtolower($class)).'.class.php';
 	}
 
 	static function run($uri)
