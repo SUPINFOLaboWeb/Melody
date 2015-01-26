@@ -1,0 +1,8 @@
+<?php  $cache = array (
+  '__melody_access' => 1,
+  'anyIndexAction' => 0,
+  '__construct' => 1,
+  'setDefaultAccessRole' => 1,
+  'setAccessRoleException' => 1,
+  '__melody_invoke' => 1,
+); ?>

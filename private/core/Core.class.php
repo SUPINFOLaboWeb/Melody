@@ -15,6 +15,10 @@ class Core
 			require_once(self::class2path($class));
 		});
 
+		if($dev)
+		{
+			\Core\Tools::rrmdir(ROOT.DIRECTORY_SEPARATOR.'private'.DIRECTORY_SEPARATOR.'cache');
+		}
 		Config::Init();
 	}
 

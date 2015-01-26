@@ -25,44 +25,64 @@ class Config
 	{
 		if(empty(self::$core_config))
 		{
-			$vars = \Core\Tools::flatten(json_decode(file_get_contents(__DIR__.'/config/core.json'), true));
-			
-			if(empty($vars))
+			if(false === $cache = \Core\Cache::get('coreconfig', 'core', 'on_demand'))
 			{
-				\Core\Core::throwError(500, 'CoreConfig syntax error');
+				$vars = \Core\Tools::flatten(json_decode(file_get_contents(__DIR__.'/config/core.json'), true));
+			
+				if(empty($vars))
+				{
+					\Core\Core::throwError(500, 'CoreConfig syntax error');
+				}
+				else
+				{
+					self::$core_config = $vars;
+					\Core\Cache::create('coreconfig', 'core', $vars, 'on_demand');
+				}
 			}
 			else
 			{
-				self::$core_config = $vars;
+				self::$core_config = $cache;
 			}
 		}
 	}
 
 	static function loadFor($apps)
 	{	
-		$appspath = array('');
-		$buffer = '';
-		foreach ($apps as $app) 
+		if(empty(self::$app_config))
 		{
-			if(!empty($app))
+			if(false === $cache = \Core\Cache::get('appconfig', join(DIRECTORY_SEPARATOR, array_filter($apps)), 'on_demand'))
 			{
-				$buffer .= DIRECTORY_SEPARATOR.'apps'.DIRECTORY_SEPARATOR.$app;
-				$appspath[] = $buffer;
+				$appspath = array('');
+				$buffer = '';
+				foreach ($apps as $app) 
+				{
+					if(!empty($app))
+					{
+						$buffer .= DIRECTORY_SEPARATOR.'apps'.DIRECTORY_SEPARATOR.$app;
+						$appspath[] = $buffer;
+					}
+				}
+
+				foreach ($appspath as $currentpath) 
+				{
+					$app_config = array();
+					$path = ROOT.DIRECTORY_SEPARATOR.'private'.DIRECTORY_SEPARATOR.'www'.$currentpath.DIRECTORY_SEPARATOR.'config';
+
+					$configfiles = is_dir($path) ? Tools::file_get_contents_loop($path) : array();
+					foreach ($configfiles as $name => $content)
+					{
+						$app_config[$name] = json_decode($content, true);
+					}
+					$app_config = Tools::flatten($app_config);
+					self::$app_config = array_merge(self::$app_config, $app_config);
+				}
+
+				\Core\Cache::create('appconfig', join(DIRECTORY_SEPARATOR, array_filter($apps)), self::$app_config, 'on_demand');
 			}
-		}
-
-		foreach ($appspath as $currentpath) 
-		{
-			$app_config = array();
-			$path = ROOT.DIRECTORY_SEPARATOR.'private'.DIRECTORY_SEPARATOR.'www'.$currentpath.DIRECTORY_SEPARATOR.'config';
-
-			$configfiles = is_dir($path) ? Tools::file_get_contents_loop($path) : array();
-			foreach ($configfiles as $name => $content)
+			else
 			{
-				$app_config[$name] = json_decode($content, true);
+				self::$app_config = $cache;
 			}
-			$app_config = Tools::flatten($app_config);
-			self::$app_config = array_merge(self::$app_config, $app_config);
 		}
 	}
 

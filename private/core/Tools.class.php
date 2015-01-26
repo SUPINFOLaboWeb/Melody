@@ -101,4 +101,21 @@ class Tools
 				.(empty($method) && empty($args) && empty($controller) ? '': (empty($method) ? 'index' : $method))
 				.(empty($args) ? '' : '/'.((is_array($args)) ? join('/', $args) : $args));
 	}
+
+	static function rrmdir($dir) 
+	{ 
+		if (is_dir($dir)) 
+		{ 
+			$objects = scandir($dir); 
+			foreach ($objects as $object) 
+			{ 
+				if ($object != "." && $object != "..") 
+				{ 
+					if (is_dir($dir.DIRECTORY_SEPARATOR.$object)) self::rrmdir($dir.DIRECTORY_SEPARATOR.$object); else unlink($dir.DIRECTORY_SEPARATOR.$object); 
+				} 
+			} 
+			reset($objects); 
+			rmdir($dir); 
+		}
+	}
 }
