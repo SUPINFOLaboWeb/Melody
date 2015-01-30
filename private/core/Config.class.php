@@ -25,7 +25,7 @@ class Config
 	{
 		if(empty(self::$core_config))
 		{
-			if(false === $cache = \Core\Cache::get('coreconfig', 'core', 'on_demand'))
+			if(false === $cache = \Core\Cache::get('coreconfig', 'core'))
 			{
 				$vars = \Core\Tools::flatten(json_decode(file_get_contents(__DIR__.'/config/core.json'), true));
 			
@@ -50,7 +50,7 @@ class Config
 	{	
 		if(empty(self::$app_config))
 		{
-			if(false === $cache = \Core\Cache::get('appconfig', join(DIRECTORY_SEPARATOR, array_filter($apps)), 'on_demand'))
+			if(false === $cache = \Core\Cache::get('appconfig', join(DIRECTORY_SEPARATOR, array_filter($apps))))
 			{
 				$appspath = array('');
 				$buffer = '';
@@ -100,8 +100,6 @@ class Config
 	{
 		return self::listMatching($key, 'core');
 	}
-
-
 
 	static function get($key, $context='app')
 	{

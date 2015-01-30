@@ -102,6 +102,13 @@ class Tools
 				.(empty($args) ? '' : '/'.((is_array($args)) ? join('/', $args) : $args));
 	}
 
+	static function pathfor($apps=array(), $filename='', $suffix='')
+	{
+		return 	ROOT.DIRECTORY_SEPARATOR.'private'.DIRECTORY_SEPARATOR.'www'.DIRECTORY_SEPARATOR
+				.(empty($apps) ? '' : DIRECTORY_SEPARATOR.'apps'.DIRECTORY_SEPARATOR.((is_array($apps)) ? join(DIRECTORY_SEPARATOR.'apps'.DIRECTORY_SEPARATOR, $apps) : $apps).DIRECTORY_SEPARATOR)
+				.$filename.$suffix;
+	}
+
 	static function rrmdir($dir) 
 	{ 
 		if (is_dir($dir)) 

@@ -1,4 +1,4 @@
-<?php  $cache = array (
+<?php $expiration_mode = 'on_demand'; $cache = array (
   'access_role_session_key' => 'role',
   'access_role_if_missing' => 0,
   'access_role_default' => 0,

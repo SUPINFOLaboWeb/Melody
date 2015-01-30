@@ -65,7 +65,7 @@ class FrontController
 
 		Config::loadFor($data['apps']);
 
-		$page->{'__melody_invoke'}($method, array());
+		$page->{'__melody_invoke'}($method, array(new \Core\Request(), new \Core\Response()));
 	}
 
 	static function parseURI($uri)

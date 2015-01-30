@@ -25,16 +25,20 @@ class Core
 	static function class2path($class)
 	{
 		//var_dump($class);
-		$old = $path 		= str_replace('\\', DIRECTORY_SEPARATOR, $class);
-		$path 		= explode('\\', $class);
-		$class 		= array_pop($path);
-		$container = array_pop($path);
-		$component 	= array_shift($path);
+		$old 	= $path 	= str_replace('\\', DIRECTORY_SEPARATOR, $class);
+		$path 				= explode('\\', $class);
+		$class 				= array_pop($path);
+		$container 			= array_pop($path);
+		$component 			= array_shift($path);
 
 		switch($container)
 		{
+
 			case 'controllers':
-				$class = str_replace('Controller', '', $class);
+				$class = str_replace('Controller', '', $class).'.class.php';
+			break;
+			default:
+				$class = $class.'.class.php';
 			break;
 		}
 
@@ -49,7 +53,7 @@ class Core
 				.DIRECTORY_SEPARATOR.'private'
 				.DIRECTORY_SEPARATOR.strtolower($component)
 				.DIRECTORY_SEPARATOR.strtolower(join(DIRECTORY_SEPARATOR, $path)).strtolower($container)
-				.DIRECTORY_SEPARATOR.ucfirst(strtolower($class)).'.class.php';
+				.DIRECTORY_SEPARATOR.ucfirst(strtolower($class));
 	}
 
 	static function run($uri)

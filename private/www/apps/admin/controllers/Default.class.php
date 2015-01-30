@@ -12,8 +12,9 @@ class DefaultController extends \Core\Controller
 		$this->setAccessRoleException('anyIndexAction', 0);
 	}
 
-	public function anyIndexAction()
+	public function anyIndexAction($req, $res)
 	{
 		echo('Bienvenue sur l\'espace d\'administration');
+		return $resp;
 	}
 }

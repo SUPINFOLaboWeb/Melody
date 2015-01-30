@@ -1,0 +1,1 @@
+<?php var_dump(\Core\Config::listMatching('app_')); ?>

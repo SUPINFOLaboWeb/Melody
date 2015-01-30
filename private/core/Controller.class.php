@@ -8,9 +8,11 @@ class Controller
 
 	public function __construct()
 	{
-		if(false === $cache = \Core\Cache::get('access', get_class($this), 'on_demand'))
+		if(false === $cache = \Core\Cache::get('access', get_class($this)))
 		{
-			$this->__melody_access();
+			if(method_exists($this, '__melody_access'))
+				$this->__melody_access();
+
 			\Core\Cache::create('access', get_class($this), $this->method_access, 'on_demand');
 		}
 		else
@@ -39,11 +41,46 @@ class Controller
 
 		if($role >= $access_role)
 		{
-			ob_start();
-			$response = call_user_func_array(array($this, $method), $args);
-			$buffer = ob_get_clean();
+			$class = get_class($this);
+			if(false === $cache = \Core\Cache::get('controller', $class))
+			{
+				ob_start();
+				$__melody_response = call_user_func_array(array($this, $method), $args);
+				$buffer = ob_get_clean();
 
-			var_dump($buffer);
+				ob_start();
+				$vars = $__melody_response->viewvars;
+				if(!empty($__melody_response->viewpath))
+				{
+					if($__melody_response->viewpath[1])
+					{
+						list($apps, $file) = $__melody_response->viewpath[0];
+						var_dump($apps);
+						$path = Tools::pathfor($apps, 'views'.DIRECTORY_SEPARATOR.$file, '.php');
+
+					}					
+					else
+					{
+						$path = Tools::pathfor(array_merge(array_filter(FrontController::$apps), array('views')), $__melody_response->viewpath[0], '.php');
+					}
+
+					ob_start();
+					include($path);
+					$output = ob_get_clean();
+
+					if($__melody_response->cache)
+					{
+						\Core\Cache::create('controller', $class, $output, $__melody_response->cache_mode, $__melody_response->expiration);
+					}
+
+					echo $output;
+
+				}
+				else
+				{
+					echo $cache;
+				}
+			}
 		}
 		else
 		{

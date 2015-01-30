@@ -4,16 +4,19 @@ namespace core;
 
 class Cache
 {
-	private static $expiration_varname = 'expiration';
-	private static $content_varname	= 'cache';
+	private static $expiration_varname 		= 'expiration';
+	private static $expiration_mode_varname = 'expiration_mode';
+	private static $content_varname			= 'cache';
 
-	public static function get($component, $class, $mode)
+	public static function get($component, $class)
 	{
 		$path = self::getPath($component, $class);
 
 		if(file_exists($path))
 		{
 			include($path);
+
+			$mode = (isset(${self::$expiration_mode_varname}) ? ${self::$expiration_mode_varname} : '' );
 
 			switch(strtolower($mode))
 			{
@@ -53,11 +56,11 @@ class Cache
 		switch(strtolower($mode))
 		{
 			case 'on_expiration':
-				$expiration_str = '$'.self::$expiration_varname.' = '.$time.';';
+				$expiration_str = '$'.self::$expiration_varname.' = '.$time.'; $'.self::$expiration_mode_varname.' = \'on_expiration\';';
 			break;
 			case 'on_demand':
 			default:
-				$expiration_str = '';
+				$expiration_str = '$'.self::$expiration_mode_varname.' = \'on_demand\';';
 			break;
 		}
 
