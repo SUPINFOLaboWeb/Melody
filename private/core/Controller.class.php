@@ -42,49 +42,84 @@ class Controller
 		if($role >= $access_role)
 		{
 			$class = get_class($this);
-			if(false === $cache = \Core\Cache::get('controller', $class))
+			if(false === $cache = \Core\Cache::get('controller', $class.'_'.$method))
 			{
 				ob_start();
 				$__melody_response = call_user_func_array(array($this, $method), $args);
 				$buffer = ob_get_clean();
 
-				ob_start();
-				$vars = $__melody_response->viewvars;
-				if(!empty($__melody_response->viewpath))
-				{
-					if($__melody_response->viewpath[1])
-					{
-						list($apps, $file) = $__melody_response->viewpath[0];
-						var_dump($apps);
-						$path = Tools::pathfor($apps, 'views'.DIRECTORY_SEPARATOR.$file, '.php');
-
-					}					
-					else
-					{
-						$path = Tools::pathfor(array_merge(array_filter(FrontController::$apps), array('views')), $__melody_response->viewpath[0], '.php');
-					}
-
-					ob_start();
-					include($path);
-					$output = ob_get_clean();
-
-					if($__melody_response->cache)
-					{
-						\Core\Cache::create('controller', $class, $output, $__melody_response->cache_mode, $__melody_response->expiration);
-					}
-
-					echo $output;
-
-				}
-				else
-				{
-					echo $cache;
-				}
+				
+				echo self::execute_view($__melody_response, $buffer, $class);
+				
+			}
+			else
+			{
+				echo $cache;
 			}
 		}
 		else
 		{
 			exit('FORBIDDEN');
 		}
+	}
+
+	public static function invoke($method, $req, ...$args)
+	{
+		$class = get_called_class();
+		
+		if(false === $cache = \Core\Cache::get('controller', $class.'_'.$method))
+		{
+			ob_start();
+			$c = new $class();
+			
+			array_unshift($args, new Response());
+			array_unshift($args, $req);
+
+			$__melody_response = call_user_func_array(array($c, $method), $args);
+			$buffer = ob_get_clean();
+
+			return self::execute_view($__melody_response, $buffer, $class);
+		}
+		else
+		{
+			return $cache;
+		}
+	}
+
+	private static function execute_view($__melody_response = null, $buffer, $class)
+	{
+		$__melody_response = (is_null($__melody_response) ? new \core\Response() : $__melody_response);
+
+		// permet d'accéder aux différentes variables directement dans la view
+		$vars = $__melody_response->viewvars;
+
+		if(!empty($__melody_response->viewpath))
+		{
+			if($__melody_response->viewpath[1])
+			{
+				list($apps, $file) = $__melody_response->viewpath[0];
+				$path = Tools::pathfor($apps, 'views'.DIRECTORY_SEPARATOR.$file, '.php');
+
+			}					
+			else
+			{
+				$path = Tools::pathfor(array_filter(FrontController::$apps), 'views'.DIRECTORY_SEPARATOR.$__melody_response->viewpath[0], '.php');
+			}
+
+			ob_start();
+			include($path);
+			$output = ob_get_clean();
+
+			
+			if($__melody_response->cache)
+			{
+				\Core\Cache::create('controller', $class.'_'.$method, $output, $__melody_response->cache_mode, $__melody_response->expiration);
+			}
+
+			return  $output.$buffer;
+
+		}
+
+		return $buffer;
 	}
 }

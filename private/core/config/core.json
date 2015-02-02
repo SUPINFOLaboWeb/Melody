@@ -12,6 +12,7 @@
 	{
 		"error_varname" : "error",
 		"flash_varname" : "flash",
-		"content_varname" : "vars"
+		"content_varname" : "vars",
+		"attribute_varname" : "attributes"
 	}
 }

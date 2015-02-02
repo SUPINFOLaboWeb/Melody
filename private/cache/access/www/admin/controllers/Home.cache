@@ -1,0 +1,12 @@
+<?php $expiration_mode = 'on_demand'; $cache = array (
+  '__melody_access' => 1,
+  'anyIndexAction' => 0,
+  'anyDataAction' => 0,
+  'anyTestHmvcAction' => 0,
+  '__construct' => 1,
+  'setDefaultAccessRole' => 1,
+  'setAccessRoleException' => 1,
+  '__melody_invoke' => 1,
+  'invoke' => 1,
+  'execute_view' => 1,
+); ?>

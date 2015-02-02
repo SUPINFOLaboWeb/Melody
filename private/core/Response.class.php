@@ -46,10 +46,12 @@ class Response
 		return $this;
 	}
 
-	public function cache($mode, $time=0)
+	public function cache($mode='on_demand', $time=0)
 	{	
 		$this->cache 		= true;
 		$this->cache_mode 	= $mode;
-		$this->$expiration	= $time;
+		$this->expiration	= $time;
+
+		return $this;
 	}
 }

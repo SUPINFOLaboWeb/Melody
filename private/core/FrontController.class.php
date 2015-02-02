@@ -13,29 +13,51 @@ class FrontController
 
 	static function routeTo($uri)
 	{
-		$data 		= self::parseURI($uri);
-		$class 		= 'www\\'.join('\\', $data['apps']).'controllers\\'.ucfirst(strtolower($data['controller']));
-		$class_alt 	= 'www\\'.join('\\', $data['apps']).$data['method'].'\\controllers\\'.ucfirst(strtolower($data['controller']));
-		$method 	= strtolower($_SERVER['REQUEST_METHOD']).ucfirst(strtolower($data['method'])).'Action';
-		$method_alt = 'any'.ucfirst(strtolower($data['method'])).'Action';
+
+		$data 				= self::parseURI($uri);
+		$default_class		= 'www\\'.join('\\', $data['apps']).'controllers\\'.ucfirst(strtolower('home'));
+		$class 				= 'www\\'.join('\\', $data['apps']).'controllers\\'.ucfirst(strtolower($data['controller']));
+		$class_alt 			= 'www\\'.join('\\', $data['apps']).$data['method'].'\\controllers\\'.ucfirst(strtolower($data['controller']));
+		$method 			= strtolower($_SERVER['REQUEST_METHOD']).str_replace('-', '', mb_convert_case($data['method'], MB_CASE_TITLE, "UTF-8")).'Action';
+		$method_alt 		= 'any'.str_replace('-', '', mb_convert_case($data['method'], MB_CASE_TITLE, "UTF-8")).'Action';
+		$default_method 	= strtolower($_SERVER['REQUEST_METHOD']).ucfirst(strtolower($data['controller'])).str_replace('-', '', mb_convert_case($data['method'], MB_CASE_TITLE, "UTF-8")).'Action';
+		$default_method_alt = 'any'.ucfirst(strtolower($data['controller'])).str_replace('-', '', mb_convert_case($data['method'], MB_CASE_TITLE, "UTF-8")).'Action';
 
 		// le controller existe bien sinon 404
 		if(!file_exists(Core::class2path($class)))
 		{
-			if($data['controller'] == 'default' && $data['method'] != 'index') 
+			if($data['controller'] == 'home' && $data['method'] != 'index') 
 			{
-				if(!file_exists(Core::class2path($class_alt)))
-				{
-					self::throw_error(404, '/'.$uri);
-				}
-				else
+				if(file_exists(Core::class2path($class_alt)))
 				{
 					self::redirect(array_merge(array_filter($data['apps']), array($data['method'])), '', '', $data['args']);
 				}
+				else
+				{
+					self::throw_error(404, '/'.$uri);
+				}
 			}
+			else
+			{
+				if(method_exists($default_class, $default_method))
+				{
+					$class = $default_class;
+					$method = $default_method;
+				}
+				else
+				{
+					if(method_exists($default_class, $default_method_alt))
+					{
+						$class = $default_class;
+						$method = $default_method_alt;
+					}
+					else
+					{
+						self::throw_error(404, '/'.$uri);
+					}
+				}
+			}	
 		}
-
-		$class .= 'Controller';
 
 		// la méthode existe bien sinon 404
 		if(!method_exists($class, $method))
@@ -46,8 +68,29 @@ class FrontController
 				{
 					self::redirect(array_merge(array_filter($data['apps']), array($data['method'])), '', '', $data['args']);
 				}
+				else
+				{
+					if(method_exists($default_class, $default_method))
+					{
+						$class = $default_class;
+						$method = $default_method;
+					}
+					else
+					{
+						if(method_exists($default_class, $default_method_alt))
+						{
+							$class = $default_class;
+							$method = $default_method_alt;
+						}
+						else
+						{
 
-				self::throw_error(404, '/'.$uri);
+							exit('blop');
+							self::throw_error(404, '/'.$uri);
+						}
+					}
+				}
+				
 			}
 			else
 			{
@@ -65,7 +108,8 @@ class FrontController
 
 		Config::loadFor($data['apps']);
 
-		$page->{'__melody_invoke'}($method, array(new \Core\Request(), new \Core\Response()));
+		$page->{'__melody_invoke'}($method, array(\Core\Request::getInstance(), new \Core\Response()));
+
 	}
 
 	static function parseURI($uri)
@@ -89,7 +133,7 @@ class FrontController
 			}
 
 			// remplacement pour les valeurs par défaut
-			$data['controller'] = (!empty($data['controller']) ? $data['controller'] : 'default');
+			$data['controller'] = (!empty($data['controller']) ? $data['controller'] : 'home');
 			$data['method'] 	= (!empty($data['method']) ? $data['method'] : 'index');
 
 			return $data;
