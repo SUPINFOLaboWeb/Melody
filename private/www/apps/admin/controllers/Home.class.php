@@ -12,6 +12,7 @@ class Home extends \Core\Controller
 		$this->setAccessRoleException('anyIndexAction', 0);
 		$this->setAccessRoleException('anyDataAction', 0);
 		$this->setAccessRoleException('anyTestHmvcAction', 0);
+		$this->setAccessRoleException('anyXnxxAction', 0);
 	}
 
 	public function anyIndexAction($req, $res)
@@ -32,5 +33,10 @@ class Home extends \Core\Controller
 		var_dump($req);
 
 		return $res->setView('blop', array());
+	}
+
+	public function anyXnxxAction($req, $res)
+	{
+		return $res;
 	}
 }

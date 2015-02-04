@@ -15,6 +15,10 @@ class FrontController
 	{
 
 		$data 				= self::parseURI($uri);
+
+		$data['apps'] 		= self::applyHostConfiguration($data);
+		
+
 		$default_class		= 'www\\'.join('\\', $data['apps']).'controllers\\'.ucfirst(strtolower('home'));
 		$class 				= 'www\\'.join('\\', $data['apps']).'controllers\\'.ucfirst(strtolower($data['controller']));
 		$class_alt 			= 'www\\'.join('\\', $data['apps']).$data['method'].'\\controllers\\'.ucfirst(strtolower($data['controller']));
@@ -22,6 +26,9 @@ class FrontController
 		$method_alt 		= 'any'.str_replace('-', '', mb_convert_case($data['method'], MB_CASE_TITLE, "UTF-8")).'Action';
 		$default_method 	= strtolower($_SERVER['REQUEST_METHOD']).ucfirst(strtolower($data['controller'])).str_replace('-', '', mb_convert_case($data['method'], MB_CASE_TITLE, "UTF-8")).'Action';
 		$default_method_alt = 'any'.ucfirst(strtolower($data['controller'])).str_replace('-', '', mb_convert_case($data['method'], MB_CASE_TITLE, "UTF-8")).'Action';
+
+
+
 
 		// le controller existe bien sinon 404
 		if(!file_exists(Core::class2path($class)))
@@ -41,7 +48,7 @@ class FrontController
 			{
 				if(method_exists($default_class, $default_method))
 				{
-					$class = $default_class;
+					$class 	= $default_class;
 					$method = $default_method;
 				}
 				else
@@ -84,8 +91,6 @@ class FrontController
 						}
 						else
 						{
-
-							exit('blop');
 							self::throw_error(404, '/'.$uri);
 						}
 					}
@@ -118,11 +123,11 @@ class FrontController
 		{
 
 			$data = array(
-				'URI' 			=>$matches[0],
-				'apps' 			=>(isset($matches[1]) ? explode('/', $matches[1]) : array()), 
-				'controller' 	=>(isset($matches[2]) ? $matches[2] : ''), 
-				'method' 		=>(isset($matches[3]) ? $matches[3] : ''), 
-				'args' 			=>array_filter(explode('/', (isset($matches[4]) ? $matches[4] : ''))), 
+				'URI' 			=> $matches[0],
+				'apps' 			=> (isset($matches[1]) ? explode('/', $matches[1]) : array()), 
+				'controller' 	=> (isset($matches[2]) ? $matches[2] : ''), 
+				'method' 		=> (isset($matches[3]) ? $matches[3] : ''), 
+				'args' 			=> array_filter(explode('/', (isset($matches[4]) ? $matches[4] : ''))), 
 			);
 
 			// petit trick
@@ -140,7 +145,50 @@ class FrontController
 		}
 	}
 
-	static function throw_error($code, $msg)
+	static function applyHostConfiguration($data)
+	{
+		$apps = $data['apps'];
+
+		// recupération du chemin "complet"
+		$de = explode('.', $_SERVER['HTTP_HOST']);
+		$dn = implode('.', array_slice($de, 0, -2));
+		$host = implode('.', array_slice($de, -2));
+
+
+		$configFromDomain = Config::Host_getConfigFromDomain($dn);
+		$apps = array_merge($configFromDomain, $apps);
+		$configFromPath = Config::Host_getConfigFromPath(array_filter($apps));
+
+		if(!empty($configFromPath))
+		{
+			if($configFromPath['domain'] != $dn)
+			{
+				switch($configFromPath['action'])
+				{
+					case 'forbid':
+						self::throw_error(403);
+					break;
+					case 'redirect':
+						$host_apps = Config::Host_getConfigFromDomain($configFromPath['domain']);
+						self::redirectURL(strtolower(explode('/', 	$_SERVER['SERVER_PROTOCOL'])[0]).'://'
+																	.$configFromPath['domain'].'.'.$host
+																	.'/'.Tools::urlfor(array_slice(array_filter($apps), count($host_apps)), 
+																						$data['controller'] == 'home' ? '': $data['controller'], 
+																						$data['method'] == 'index' ? '' : $data['method'], 
+																						null, 
+																	false), true, true); 
+					break;
+					case 'none':
+					default:
+						break;
+				}
+			}	
+		}
+
+		return $apps;
+	}
+
+	static function throw_error($code, $msg='')
 	{
 		var_dump($code.' : '.$msg);
 		exit();

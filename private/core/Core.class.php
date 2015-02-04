@@ -76,9 +76,9 @@ class Core
 
 		return  ROOT
 				.DIRECTORY_SEPARATOR.'private'
-				.DIRECTORY_SEPARATOR.strtolower($component)
-				.DIRECTORY_SEPARATOR.strtolower(join(DIRECTORY_SEPARATOR, $path)).strtolower($container)
-				.DIRECTORY_SEPARATOR.ucfirst(strtolower($class));
+				.DIRECTORY_SEPARATOR.$component
+				.DIRECTORY_SEPARATOR.join(DIRECTORY_SEPARATOR, $path).$container
+				.DIRECTORY_SEPARATOR.$class;
 	}
 
 	static function run($uri)

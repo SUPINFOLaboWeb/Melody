@@ -1,0 +1,27 @@
+{
+	"www" :
+	{
+		"path" : "/",
+		"action" : "redirect",
+		"recursive" : true
+	},
+	"admin" :
+	{
+		"path": "/admin",
+		"action": "forbid",
+		"recursive" : true
+	},
+	"deux.niveaux" :
+	{
+		"path": "/test",
+		"action": "none",
+		"recursive" : false
+	},
+	"blop" :
+	{
+		"path" : "/admin/test/blop",
+		"action" : "redirect",
+		"recursive" : true
+	}
+
+}

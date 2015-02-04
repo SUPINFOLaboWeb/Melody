@@ -1,0 +1,223 @@
+Cache	private\core\Cache.class.php	/^class Cache$/;"	c
+content_varname	private\core\Cache.class.php	/^	private static $content_varname			= 'cache';$/;"	v
+create	private\core\Cache.class.php	/^	public static function create($component, $class, $data, $mode, $time=0)$/;"	f
+expiration_mode_varname	private\core\Cache.class.php	/^	private static $expiration_mode_varname = 'expiration_mode';$/;"	v
+expiration_str	private\core\Cache.class.php	/^				$expiration_str = '$'.self::$expiration_mode_varname.' = \\'on_demand\\';';$/;"	v
+expiration_str	private\core\Cache.class.php	/^				$expiration_str = '$'.self::$expiration_varname.' = '.$time.'; $'.self::$expiration_mode_varname.' = \\'on_expiration\\';';$/;"	v
+expiration_varname	private\core\Cache.class.php	/^	private static $expiration_varname 		= 'expiration';$/;"	v
+expire	private\core\Cache.class.php	/^	public static function expire($component, $class)$/;"	f
+get	private\core\Cache.class.php	/^	public static function get($component, $class)$/;"	f
+getPath	private\core\Cache.class.php	/^	private static function getPath($component, $class)$/;"	f
+mode	private\core\Cache.class.php	/^			$mode = (isset(${self::$expiration_mode_varname}) ? ${self::$expiration_mode_varname} : '' );$/;"	v
+path	private\core\Cache.class.php	/^		$path = self::getPath($component, $class);$/;"	v
+time	private\core\Cache.class.php	/^	public static function create($component, $class, $data, $mode, $time=0)$/;"	v
+Config	private\core\Config.class.php	/^class Config$/;"	c
+Core_get	private\core\Config.class.php	/^	static function Core_get($key)$/;"	f
+Core_getAll	private\core\Config.class.php	/^	static function Core_getAll()$/;"	f
+Core_listMatching	private\core\Config.class.php	/^	static function Core_listMatching($key)$/;"	f
+Init	private\core\Config.class.php	/^	static function Init()$/;"	f
+__construct	private\core\Config.class.php	/^	private function __construct()$/;"	f
+app_config	private\core\Config.class.php	/^					$app_config = Tools::flatten($app_config);$/;"	v
+app_config	private\core\Config.class.php	/^					$app_config = array();$/;"	v
+app_config	private\core\Config.class.php	/^	static private $app_config 		= array();$/;"	v
+appspath	private\core\Config.class.php	/^				$appspath = array('');$/;"	v
+buffer	private\core\Config.class.php	/^				$buffer = '';$/;"	v
+cache	private\core\Config.class.php	/^			if(false === $cache = \\Core\\Cache::get('appconfig', join(DIRECTORY_SEPARATOR, array_filter($apps))))$/;"	v
+cache	private\core\Config.class.php	/^			if(false === $cache = \\Core\\Cache::get('coreconfig', 'core'))$/;"	v
+configfiles	private\core\Config.class.php	/^					$configfiles = is_dir($path) ? Tools::file_get_contents_loop($path) : array();$/;"	v
+context	private\core\Config.class.php	/^	static function get($key, $context='app')$/;"	v
+context	private\core\Config.class.php	/^	static function listMatching($key, $context='app')$/;"	v
+core_config	private\core\Config.class.php	/^	static private $core_config 	= array();$/;"	v
+get	private\core\Config.class.php	/^	static function get($key, $context='app')$/;"	f
+getAll	private\core\Config.class.php	/^	static function getAll($context='app')$/;"	f
+instance	private\core\Config.class.php	/^	static private $instance 		= null;$/;"	v
+listMatching	private\core\Config.class.php	/^	static function listMatching($key, $context='app')$/;"	f
+loadCoreVars	private\core\Config.class.php	/^	function loadCoreVars()$/;"	f
+loadFor	private\core\Config.class.php	/^	static function loadFor($apps)$/;"	f
+name	private\core\Config.class.php	/^					foreach ($configfiles as $name => $content)$/;"	v
+path	private\core\Config.class.php	/^					$path = ROOT.DIRECTORY_SEPARATOR.'private'.DIRECTORY_SEPARATOR.'www'.$currentpath.DIRECTORY_SEPARATOR.'config';$/;"	v
+vars	private\core\Config.class.php	/^				$vars = \\Core\\Tools::flatten(json_decode(file_get_contents(__DIR__.'\/config\/core.json'), true));$/;"	v
+Controller	private\core\Controller.class.php	/^class Controller$/;"	c
+__construct	private\core\Controller.class.php	/^	public function __construct()$/;"	f
+__melody_invoke	private\core\Controller.class.php	/^	public function __melody_invoke($method, $args)$/;"	f
+__melody_response	private\core\Controller.class.php	/^				$__melody_response = call_user_func_array(array($this, $method), $args);$/;"	v
+__melody_response	private\core\Controller.class.php	/^			$__melody_response = call_user_func_array(array($c, $method), $args);$/;"	v
+__melody_response	private\core\Controller.class.php	/^		$__melody_response = (is_null($__melody_response) ? new \\core\\Response() : $__melody_response);$/;"	v
+access_role	private\core\Controller.class.php	/^		$access_role 	= (isset($this->method_access[$method]) ? $this->method_access[$method] : (!is_null(\\Core\\Config::get('access_role')) ? Core\\Config::get('access_role') : \\Core\\Config::Core_get('access_role_default')));$/;"	v
+buffer	private\core\Controller.class.php	/^				$buffer = ob_get_clean();$/;"	v
+buffer	private\core\Controller.class.php	/^			$buffer = ob_get_clean();$/;"	v
+c	private\core\Controller.class.php	/^			$c = new $class();$/;"	v
+cache	private\core\Controller.class.php	/^			if(false === $cache = \\Core\\Cache::get('controller', $class.'_'.$method))$/;"	v
+cache	private\core\Controller.class.php	/^		if(false === $cache = \\Core\\Cache::get('access', get_class($this)))$/;"	v
+cache	private\core\Controller.class.php	/^		if(false === $cache = \\Core\\Cache::get('controller', $class.'_'.$method))$/;"	v
+class	private\core\Controller.class.php	/^			$class = get_class($this);$/;"	v
+class	private\core\Controller.class.php	/^		$class = get_called_class();$/;"	v
+execute_view	private\core\Controller.class.php	/^	private static function execute_view($__melody_response = null, $buffer, $class)$/;"	f
+invoke	private\core\Controller.class.php	/^	public static function invoke($method, $req, ...$args)$/;"	f
+method_access	private\core\Controller.class.php	/^			$this->method_access = $cache;$/;"	v
+method_access	private\core\Controller.class.php	/^	private $method_access = array();$/;"	v
+output	private\core\Controller.class.php	/^			$output = ob_get_clean();$/;"	v
+path	private\core\Controller.class.php	/^				$path = Tools::pathfor($apps, 'views'.DIRECTORY_SEPARATOR.$file, '.php');$/;"	v
+path	private\core\Controller.class.php	/^				$path = Tools::pathfor(array_filter(FrontController::$apps), 'views'.DIRECTORY_SEPARATOR.$__melody_response->viewpath[0], '.php');$/;"	v
+role	private\core\Controller.class.php	/^		$role 			= (isset($_SESSION[\\Core\\Config::Core_get('access_role_session_key')]) ? $_SESSION[\\Core\\Config::Core_get('access_role_session_key')] : \\Core\\Config::Core_get('access_role_if_missing'));$/;"	v
+setAccessRoleException	private\core\Controller.class.php	/^	public function setAccessRoleException($method, $role)$/;"	f
+setDefaultAccessRole	private\core\Controller.class.php	/^	public function setDefaultAccessRole($role)$/;"	f
+vars	private\core\Controller.class.php	/^		$vars = $__melody_response->viewvars;$/;"	v
+Core	private\core\Core.class.php	/^class Core$/;"	c
+DEV_ENV	private\core\Core.class.php	/^		define('DEV_ENV', $dev);$/;"	d
+PROD_ENV	private\core\Core.class.php	/^		define('PROD_ENV', !$dev);$/;"	d
+ROOT	private\core\Core.class.php	/^		define('ROOT', self::$root);$/;"	d
+class	private\core\Core.class.php	/^				$class = $class.'.class.php';$/;"	v
+class	private\core\Core.class.php	/^				$class = str_replace('Controller', '', $class).'.class.php';$/;"	v
+class	private\core\Core.class.php	/^		$class 				= array_pop($path);$/;"	v
+class2path	private\core\Core.class.php	/^	static function class2path($class)$/;"	f
+component	private\core\Core.class.php	/^		$component 			= array_shift($path);$/;"	v
+container	private\core\Core.class.php	/^		$container 			= array_pop($path);$/;"	v
+init	private\core\Core.class.php	/^	static function init($dev=false)$/;"	f
+old	private\core\Core.class.php	/^		$old 	= $path 	= str_replace('\\\\', DIRECTORY_SEPARATOR, $class);$/;"	v
+path	private\core\Core.class.php	/^					$path = self::class2path($class);$/;"	v
+path	private\core\Core.class.php	/^			$path = array_map(function($e){ return 'apps'.DIRECTORY_SEPARATOR.$e; }, $path);$/;"	v
+path	private\core\Core.class.php	/^		$path 				= explode('\\\\', $class);$/;"	v
+root	private\core\Core.class.php	/^	static public $root = '';$/;"	v
+run	private\core\Core.class.php	/^	static function run($uri)$/;"	f
+Data	private\core\Data.class.php	/^class Data$/;"	c
+__callStatic	private\core\Data.class.php	/^	static function __callStatic($method, $args)$/;"	f
+__construct	private\core\Data.class.php	/^	private function __construct()$/;"	f
+args	private\core\Data.class.php	/^	static function invoke($class, $args=array())$/;"	v
+connection	private\core\Data.class.php	/^	private static function connection($settings)$/;"	f
+dbh	private\core\Data.class.php	/^		$dbh = new PDO($dsn, $settings['user'], $settings['pass'], $options);$/;"	v
+dsn	private\core\Data.class.php	/^		$dsn = 'mysql:'.implode(';', $dsnpairs);$/;"	v
+dsnarr	private\core\Data.class.php	/^		$dsnarr = array_intersect_key($settings, $dsndefaults);$/;"	v
+dsndefaults	private\core\Data.class.php	/^		$dsndefaults = array_fill_keys(array('host', 'port', 'unix_socket', 'dbname', 'charset'), null);$/;"	v
+dsnpairs	private\core\Data.class.php	/^		$dsnpairs = array();$/;"	v
+emulate_prepares	private\core\Data.class.php	/^		$emulate_prepares = (version_compare($serverversion, $emulate_prepares_below_version, '<'));$/;"	v
+emulate_prepares_below_version	private\core\Data.class.php	/^		$emulate_prepares_below_version = '5.1.17';$/;"	v
+getInstance	private\core\Data.class.php	/^	static function getInstance($infos=array())$/;"	f
+included	private\core\Data.class.php	/^	protected static $included = array();$/;"	v
+instance	private\core\Data.class.php	/^	protected static $instance;$/;"	v
+invoke	private\core\Data.class.php	/^	static function invoke($class, $args=array())$/;"	f
+k	private\core\Data.class.php	/^		foreach ($dsnarr as $k => $v) $/;"	v
+options	private\core\Data.class.php	/^		$options = array($/;"	v
+serverversion	private\core\Data.class.php	/^		$serverversion = $dbh->getAttribute(PDO::ATTR_SERVER_VERSION);$/;"	v
+settings	private\core\Data.class.php	/^								$settings = array($/;"	v
+settings	private\core\Data.class.php	/^				$settings = array($/;"	v
+FrontController	private\core\FrontController.class.php	/^class FrontController$/;"	c
+absolute	private\core\FrontController.class.php	/^	static function redirectURL($url, $absolute=false, $external=false)$/;"	v
+apps	private\core\FrontController.class.php	/^	static public $apps				= null;$/;"	v
+class	private\core\FrontController.class.php	/^							$class = $default_class;$/;"	v
+class	private\core\FrontController.class.php	/^						$class = $default_class;$/;"	v
+class	private\core\FrontController.class.php	/^					$class 	= $default_class;$/;"	v
+class	private\core\FrontController.class.php	/^		$class 				= 'www\\\\'.join('\\\\', $data['apps']).'controllers\\\\'.ucfirst(strtolower($data['controller']));$/;"	v
+class	private\core\FrontController.class.php	/^	static public $class 			= null;$/;"	v
+class_alt	private\core\FrontController.class.php	/^		$class_alt 			= 'www\\\\'.join('\\\\', $data['apps']).$data['method'].'\\\\controllers\\\\'.ucfirst(strtolower($data['controller']));$/;"	v
+controller	private\core\FrontController.class.php	/^	static function redirect($apps = array(), $controller='', $method='', $args=array())$/;"	v
+data	private\core\FrontController.class.php	/^			$data = array($/;"	v
+data	private\core\FrontController.class.php	/^		$data 				= self::parseURI($uri);$/;"	v
+default_class	private\core\FrontController.class.php	/^		$default_class		= 'www\\\\'.join('\\\\', $data['apps']).'controllers\\\\'.ucfirst(strtolower('home'));$/;"	v
+default_method	private\core\FrontController.class.php	/^		$default_method 	= strtolower($_SERVER['REQUEST_METHOD']).ucfirst(strtolower($data['controller'])).str_replace('-', '', mb_convert_case($data['method'], MB_CASE_TITLE, "UTF-8")).'Action';$/;"	v
+default_method_alt	private\core\FrontController.class.php	/^		$default_method_alt = 'any'.ucfirst(strtolower($data['controller'])).str_replace('-', '', mb_convert_case($data['method'], MB_CASE_TITLE, "UTF-8")).'Action';$/;"	v
+method	private\core\FrontController.class.php	/^							$method = $default_method_alt;$/;"	v
+method	private\core\FrontController.class.php	/^						$method = $default_method;$/;"	v
+method	private\core\FrontController.class.php	/^						$method = $default_method_alt;$/;"	v
+method	private\core\FrontController.class.php	/^					$method = $default_method;$/;"	v
+method	private\core\FrontController.class.php	/^				$method = $method_alt;$/;"	v
+method	private\core\FrontController.class.php	/^		$method 			= strtolower($_SERVER['REQUEST_METHOD']).str_replace('-', '', mb_convert_case($data['method'], MB_CASE_TITLE, "UTF-8")).'Action';$/;"	v
+method	private\core\FrontController.class.php	/^	static public $method 			= null;$/;"	v
+method_alt	private\core\FrontController.class.php	/^		$method_alt 		= 'any'.str_replace('-', '', mb_convert_case($data['method'], MB_CASE_TITLE, "UTF-8")).'Action';$/;"	v
+page	private\core\FrontController.class.php	/^		$page = new $class();$/;"	v
+parseURI	private\core\FrontController.class.php	/^	static function parseURI($uri)$/;"	f
+redirect	private\core\FrontController.class.php	/^	static function redirect($apps = array(), $controller='', $method='', $args=array())$/;"	f
+redirectURL	private\core\FrontController.class.php	/^	static function redirectURL($url, $absolute=false, $external=false)$/;"	f
+request_method	private\core\FrontController.class.php	/^	static public $request_method 	= null;$/;"	v
+routeTo	private\core\FrontController.class.php	/^	static function routeTo($uri)$/;"	f
+throw_error	private\core\FrontController.class.php	/^	static function throw_error($code, $msg)$/;"	f
+uri	private\core\FrontController.class.php	/^	static public $uri 				= null;$/;"	v
+Request	private\core\Request.class.php	/^class Request$/;"	c
+__construct	private\core\Request.class.php	/^	private function __construct()$/;"	f
+attributes	private\core\Request.class.php	/^	private $attributes 		= array();$/;"	v
+getAllFlash	private\core\Request.class.php	/^	public function getAllFlash()$/;"	f
+getAttribute	private\core\Request.class.php	/^	public function &getAttribute($name)$/;"	f
+getCookieParameters	private\core\Request.class.php	/^	public function getCookieParameters($name)$/;"	f
+getFlash	private\core\Request.class.php	/^	public function getFlash($name)$/;"	f
+getFlashByType	private\core\Request.class.php	/^	public function getFlashByType($type)$/;"	f
+getGetParameters	private\core\Request.class.php	/^	public function getGetParameters($name)$/;"	f
+getInstance	private\core\Request.class.php	/^	public static function &getInstance()$/;"	f
+getParameters	private\core\Request.class.php	/^	public function getParameters($name)$/;"	f
+getPostParameters	private\core\Request.class.php	/^	public function getPostParameters($name)$/;"	f
+getSession	private\core\Request.class.php	/^	public function getSession()$/;"	f
+instance	private\core\Request.class.php	/^	private static $instance 	= null;$/;"	v
+session	private\core\Request.class.php	/^	private $session 			= null;$/;"	v
+setAttribute	private\core\Request.class.php	/^	public function setAttribute($name, $value)$/;"	f
+setFlash	private\core\Request.class.php	/^	public function setFlash($name, $value, $type)$/;"	f
+Response	private\core\Response.class.php	/^class Response$/;"	c
+__construct	private\core\Response.class.php	/^	public function __construct()$/;"	f
+addToBuffer	private\core\Response.class.php	/^	public function addToBuffer($value)$/;"	f
+buffer	private\core\Response.class.php	/^	public $buffer 		= '';$/;"	v
+cache	private\core\Response.class.php	/^		$this->cache 		= true;$/;"	v
+cache	private\core\Response.class.php	/^	public $cache 		= false;$/;"	v
+cache	private\core\Response.class.php	/^	public function cache($mode='on_demand', $time=0)$/;"	f
+cache_mode	private\core\Response.class.php	/^		$this->cache_mode 	= $mode;$/;"	v
+cache_mode	private\core\Response.class.php	/^	public $cache_mode	= '';$/;"	v
+expiration	private\core\Response.class.php	/^		$this->expiration	= $time;$/;"	v
+expiratopn	private\core\Response.class.php	/^	public $expiratopn 	= 0;$/;"	v
+setCode	private\core\Response.class.php	/^	public function setCode($code=200)$/;"	f
+setHeader	private\core\Response.class.php	/^	public function setHeader($key, $value)$/;"	f
+setView	private\core\Response.class.php	/^	public function setView($path, $vars=array(), $abs=false)$/;"	f
+setViewAbs	private\core\Response.class.php	/^	public function setViewAbs($apps, $name, $vars=array())$/;"	f
+time	private\core\Response.class.php	/^	public function cache($mode='on_demand', $time=0)$/;"	v
+vars	private\core\Response.class.php	/^	public function setView($path, $vars=array(), $abs=false)$/;"	v
+vars	private\core\Response.class.php	/^	public function setViewAbs($apps, $name, $vars=array())$/;"	v
+viewpath	private\core\Response.class.php	/^		$this->viewpath = array($path, $abs);$/;"	v
+viewpath	private\core\Response.class.php	/^	public $viewpath 	= array();$/;"	v
+viewvars	private\core\Response.class.php	/^		$this->viewvars = $vars;$/;"	v
+viewvars	private\core\Response.class.php	/^	public $viewvars 	= array();$/;"	v
+Session	private\core\Session.class.php	/^class Session$/;"	c
+__get	private\core\Session.class.php	/^	public function &__get($name)$/;"	f
+__isset	private\core\Session.class.php	/^	public function __isset($name)$/;"	f
+__set	private\core\Session.class.php	/^	public function __set($name, $value)$/;"	f
+__unset	private\core\Session.class.php	/^	public function __unset($name)$/;"	f
+Tools	private\core\Tools.class.php	/^class Tools$/;"	c
+array_get_val	private\core\Tools.class.php	/^	static function array_get_val($array, $path)$/;"	f
+array_set_val	private\core\Tools.class.php	/^	static function array_set_val(&$array, $path, $value)$/;"	f
+buffer	private\core\Tools.class.php	/^		$buffer = array();$/;"	v
+controller	private\core\Tools.class.php	/^	static function urlfor($apps=array(), $controller='', $method='', $args=array(), $absolute=true)$/;"	v
+dir	private\core\Tools.class.php	/^		$dir = opendir($path);$/;"	v
+domain	private\core\Tools.class.php	/^		$domain = !is_null(Config::get('app_base_url')) ? Config::get('app_base_url') : strtolower(explode('\/', $_SERVER['SERVER_PROTOCOL'])[0]).':\/\/'.$_SERVER['HTTP_HOST'].'\/';$/;"	v
+file_get_contents_loop	private\core\Tools.class.php	/^	static function file_get_contents_loop($path, $files=array(), $sorted=false)$/;"	f
+filename	private\core\Tools.class.php	/^	static function pathfor($apps=array(), $filename='', $suffix='')$/;"	v
+files	private\core\Tools.class.php	/^	static function file_get_contents_loop($path, $files=array(), $sorted=false)$/;"	v
+flatten	private\core\Tools.class.php	/^	static function flatten($array, $prefix = '')$/;"	f
+i	private\core\Tools.class.php	/^		$i = $val;$/;"	v
+is_assoc	private\core\Tools.class.php	/^	static function is_assoc($array)$/;"	f
+key	private\core\Tools.class.php	/^			foreach ($array as $key => $value)$/;"	v
+key	private\core\Tools.class.php	/^		for($i=$array; $key=array_shift($path); $i=$i[$key]) $/;"	v
+key	private\core\Tools.class.php	/^		for($i=&$array; $key=array_shift($path); $i=&$i[$key]) $/;"	v
+new_key	private\core\Tools.class.php	/^				$new_key = $prefix . (empty($prefix) ? '' : '_') . $key;$/;"	v
+objects	private\core\Tools.class.php	/^			$objects = scandir($dir);$/;"	v
+pathfor	private\core\Tools.class.php	/^	static function pathfor($apps=array(), $filename='', $suffix='')$/;"	f
+prefix	private\core\Tools.class.php	/^	static function flatten($array, $prefix = '')$/;"	v
+result	private\core\Tools.class.php	/^					$result = array_merge($result, self::flatten($value, $new_key));$/;"	v
+result	private\core\Tools.class.php	/^			$result = array();$/;"	v
+rrmdir	private\core\Tools.class.php	/^	static function rrmdir($dir) $/;"	f
+urlfor	private\core\Tools.class.php	/^	static function urlfor($apps=array(), $controller='', $method='', $args=array(), $absolute=true)$/;"	f
+Home	private\www\apps\admin\controllers\Home.class.php	/^class Home extends \\Core\\Controller$/;"	c
+__melody_access	private\www\apps\admin\controllers\Home.class.php	/^	public function __melody_access()$/;"	f
+anyDataAction	private\www\apps\admin\controllers\Home.class.php	/^	public function anyDataAction($req, $res)$/;"	f
+anyIndexAction	private\www\apps\admin\controllers\Home.class.php	/^	public function anyIndexAction($req, $res)$/;"	f
+anyTestHmvcAction	private\www\apps\admin\controllers\Home.class.php	/^	public function anyTestHmvcAction($req, $res)$/;"	f
+anyXnxxAction	private\www\apps\admin\controllers\Home.class.php	/^	public function anyXnxxAction($req, $res)$/;"	f
+Home	private\www\controllers\Home.class.php	/^class Home extends \\Core\\Controller$/;"	c
+anyCaseSensitiveMethodAction	private\www\controllers\Home.class.php	/^	public function anyCaseSensitiveMethodAction($req, $res)$/;"	f
+anyDataAction	private\www\controllers\Home.class.php	/^	public function anyDataAction($req, $res)$/;"	f
+anyIndexAction	private\www\controllers\Home.class.php	/^	public function anyIndexAction($req, $res)$/;"	f
+test	private\www\controllers\Home.class.php	/^	public function test($req, $res)$/;"	f
+Test	private\www\controllers\Test.class.php	/^class Test extends \\Core\\Controller$/;"	c
+anyTestAction	private\www\controllers\Test.class.php	/^	public function anyTestAction()$/;"	f
+User	private\www\models\User.class.php	/^class User$/;"	c
+test	private\www\models\User.class.php	/^	public function test()$/;"	f
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_PROGRAM_VERSION	5.8	//
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/

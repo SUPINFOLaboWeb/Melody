@@ -1,0 +1,52 @@
+<?php $expiration_mode = 'on_demand'; $cache = array (
+  'domain' => 
+  array (
+    '_' => 
+    array (
+    ),
+    '_www' => 
+    array (
+    ),
+    '_admin' => 
+    array (
+      0 => 'admin',
+    ),
+    '_deux.niveaux' => 
+    array (
+      0 => 'test',
+    ),
+    '_blop' => 
+    array (
+      0 => 'admin',
+      1 => 'test',
+      2 => 'blop',
+    ),
+  ),
+  'path' => 
+  array (
+    '/' => 
+    array (
+      'action' => 'redirect',
+      'recursive' => true,
+      'domain' => 'www',
+    ),
+    '/admin' => 
+    array (
+      'action' => 'forbid',
+      'recursive' => true,
+      'domain' => 'admin',
+    ),
+    '/test' => 
+    array (
+      'action' => 'none',
+      'recursive' => false,
+      'domain' => 'deux.niveaux',
+    ),
+    '/admin/test/blop' => 
+    array (
+      'action' => 'redirect',
+      'recursive' => true,
+      'domain' => 'blop',
+    ),
+  ),
+); ?>

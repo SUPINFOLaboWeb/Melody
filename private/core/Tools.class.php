@@ -96,7 +96,7 @@ class Tools
 
 		return 	(($absolute) ? $domain : '')
 				.(empty($apps) ? '' : ((is_array($apps)) ? join('/', $apps).'/' : $apps.'/'))
-				.(empty($controller) && !empty($args) ? 'default' : (empty($controller) ? '' : $controller))
+				.((empty($controller) && !empty($args)) ? 'home' : (empty($controller) ? '' : $controller))
 				.(((empty($controller) && !empty($args)) || !(empty($controller)) && !(empty($method) && empty($args) && empty($controller))) ? '-' : '')
 				.(empty($method) && empty($args) && empty($controller) ? '': (empty($method) ? 'index' : $method))
 				.(empty($args) ? '' : '/'.((is_array($args)) ? join('/', $args) : $args));
@@ -123,6 +123,19 @@ class Tools
 			} 
 			reset($objects); 
 			rmdir($dir); 
+		}
+	}
+
+	static function values2dimensions($values, &$arr)
+	{
+		$e = array_shift($values);
+		if(!is_null($e))
+		{
+			if(!isset($arr[$e]))
+			{
+				$arr[$e] = array();
+			}
+			Tools::values2dimensions($values, $arr[$e]);
 		}
 	}
 }

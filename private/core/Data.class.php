@@ -91,6 +91,7 @@ class Data
 
 	static function invoke($class, $args=array())
 	{
+
 		return new $class($args);
 	}
 }

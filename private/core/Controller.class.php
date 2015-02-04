@@ -71,7 +71,7 @@ class Controller
 		{
 			ob_start();
 			$c = new $class();
-			
+
 			array_unshift($args, new Response());
 			array_unshift($args, $req);
 
@@ -116,7 +116,7 @@ class Controller
 				\Core\Cache::create('controller', $class.'_'.$method, $output, $__melody_response->cache_mode, $__melody_response->expiration);
 			}
 
-			return  $output.$buffer;
+			return  $output;
 
 		}
 

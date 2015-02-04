@@ -5,6 +5,7 @@ namespace core;
 class Config
 {
 	static private $core_config 	= array();
+	static private $hosts		 	= array();
 	static private $app_config 		= array();
 	static private $instance 		= null;
 
@@ -19,6 +20,7 @@ class Config
 	private function __construct()
 	{
 		$this->loadCoreVars();
+		$this->loadHostvars();
 	}
 
 	function loadCoreVars()
@@ -42,6 +44,39 @@ class Config
 			else
 			{
 				self::$core_config = $cache;
+			}
+		}
+	}
+
+	function loadHostvars()
+	{
+		if(empty(self::$hosts))
+		{
+			if(false === $cache = \Core\Cache::get('coreconfig/host', 'hostconfig'))
+			{
+				$vars = json_decode(file_get_contents(__DIR__.'/config/hosts.json'), true);
+
+				if(is_null($vars))
+				{
+					\Core\Core::throwError(500, 'Hosts config syntax error');
+				}
+				else
+				{
+					self::$hosts = array('domain' => array(), 'path'=>array());
+					self::$hosts['domain']['_'] 			= array();
+					self::$hosts['path']['/'] 				= array('action' => 'redirect', 'recursive' => true, 'domain' => '');
+
+					foreach($vars as $key => $var)
+					{
+						self::$hosts['domain']['_'.$key] 	= array_filter(explode('/', substr($var['path'], 1)));
+						self::$hosts['path'][$var['path']] 	= array('action' => $var['action'], 'recursive' => $var['recursive'], 'domain' => $key);
+					}
+					\Core\Cache::create('coreconfig/host', 'hostconfig', self::$hosts, 'on_demand');
+				}
+			}
+			else
+			{
+				self::$hosts = $cache;
 			}
 		}
 	}
@@ -115,8 +150,63 @@ class Config
 	{
 		return array_filter(self::${$context.'_config'}, function($keys) use ($key)
 		{
-
 			return preg_match('/^'.$key.'.*$/', $keys);
 		}, ARRAY_FILTER_USE_KEY);
 	}
+
+	static function Host_getConfigFromPath($path)
+	{
+		$cachename = 'action_'.implode('_',  array_filter($path));
+		if(false === $cache = \Core\Cache::get('coreconfig/host', $cachename))
+		{
+			$bufferedpath = '';
+			$bufferedconfig = array();
+			$isLast = true;
+			
+			
+			$path = array_filter($path);
+
+			$config = array();
+			if(isset(self::$hosts['path']['/']))
+				$bufferedconfig = self::$hosts['path']['/'];
+
+			while($key = array_shift($path))
+			{
+				$bufferedpath .= '/'.$key;
+				if(isset(self::$hosts['path'][$bufferedpath]))
+				{
+					$isLast = true;
+					$bufferedconfig = self::$hosts['path'][$bufferedpath];
+
+					if($bufferedconfig['recursive'])
+						$config = $bufferedconfig;
+				}
+				else
+				{
+					$isLast = false;
+				}
+			}
+
+			if($isLast)
+			{
+				\Core\Cache::create('coreconfig/host', $cachename, $bufferedconfig, 'on_demand');
+				return $bufferedconfig;
+			}
+			else
+			{
+				\Core\Cache::create('coreconfig/host', $cachename, $config, 'on_demand');
+				return $config;
+			}
+		}
+		else
+		{
+			return $cache;
+		}
+	}
+
+	static function Host_getConfigFromDomain($domain='')
+	{
+		return (isset(self::$hosts['domain']['_'.$domain]) ? self::$hosts['domain']['_'.$domain] : array());
+	}
+
 }
