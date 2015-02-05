@@ -1,0 +1,16 @@
+{
+	"default_role" : 0,
+	"error" :
+	{
+		"404" : 
+		{
+			"action" : "include",
+			"controller" : ["www\\error\\controllers\\Home", "index"]
+		},
+		"403" :
+		{
+			"action" : "redirect",
+			"controller" : ["www\\error\\controllers\\Home", "index"]
+		}
+	}
+}

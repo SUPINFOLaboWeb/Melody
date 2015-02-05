@@ -1,5 +1,5 @@
 <?php
-namespace Core;
+namespace core;
 
 class Core
 {
@@ -14,7 +14,7 @@ class Core
 
 		spl_autoload_register(function($class) use ($dev)
 		{
-			if($dev)
+			if($dev && false)
 			{
 				try 
 				{
@@ -36,7 +36,7 @@ class Core
 			}
 			else
 			{
-				include(self::class2path($class));
+				require_once(self::class2path($class));
 			}
 		});
 

@@ -1,0 +1,16 @@
+<?php $expiration_mode = 'on_demand'; $cache = array (
+  'access_default_role' => 0,
+  'access_error_404_action' => 'include',
+  'access_error_404_controller' => 
+  array (
+    0 => 'www\\error\\controllers\\Home',
+    1 => 'index',
+  ),
+  'access_error_403_action' => 'redirect',
+  'access_error_403_controller' => 
+  array (
+    0 => 'www\\error\\controllers\\Home',
+    1 => 'index',
+  ),
+  'app_basename' => 'Melody 0.3',
+); ?>

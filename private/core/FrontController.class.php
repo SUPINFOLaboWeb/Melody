@@ -41,7 +41,7 @@ class FrontController
 				}
 				else
 				{
-					self::throw_error(404, '/'.$uri);
+					self::throwError(404, '/'.$uri);
 				}
 			}
 			else
@@ -60,7 +60,7 @@ class FrontController
 					}
 					else
 					{
-						self::throw_error(404, '/'.$uri);
+						self::throwError(404, '/'.$uri);
 					}
 				}
 			}	
@@ -91,7 +91,7 @@ class FrontController
 						}
 						else
 						{
-							self::throw_error(404, '/'.$uri);
+							self::throwError(404, '/'.$uri);
 						}
 					}
 				}
@@ -166,7 +166,7 @@ class FrontController
 				switch($configFromPath['action'])
 				{
 					case 'forbid':
-						self::throw_error(403);
+						self::throwError(403);
 					break;
 					case 'redirect':
 						$host_apps = Config::Host_getConfigFromDomain($configFromPath['domain']);
@@ -188,7 +188,7 @@ class FrontController
 		return $apps;
 	}
 
-	static function throw_error($code, $msg='')
+	static function throwError($code, $msg='')
 	{
 		var_dump($code.' : '.$msg);
 		exit();
@@ -203,7 +203,7 @@ class FrontController
 	{
 		if(!$external)
 		{
-			($absolute) ? header('Location: /'.$url) : header('Location: '.Config::get('app_base_url').$url);
+			($absolute) ? header('Location: /'.$url) : header('Location: '.\core\Config::get('app_base_url').$url);
 		}
 		else
 		{

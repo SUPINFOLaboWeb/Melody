@@ -1,3 +1,0 @@
-<?php $expiration_mode = 'on_demand'; $cache = array (
-  'app_basename' => 'Melody 0.3',
-); ?>
