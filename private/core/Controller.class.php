@@ -37,7 +37,7 @@ class Controller
 	public function __melody_invoke($method, $args)
 	{
 		$role 			= (isset($_SESSION[\Core\Config::Core_get('access_role_session_key')]) ? $_SESSION[\Core\Config::Core_get('access_role_session_key')] : \Core\Config::Core_get('access_role_if_missing'));
-		$access_role 	= (isset($this->method_access[$method]) ? $this->method_access[$method] : (!is_null(\Core\Config::get('access_default_role')) ? Core\Config::get('access_default_role') : \Core\Config::Core_get('access_role_default')));
+		$access_role 	= (isset($this->method_access[$method]) ? $this->method_access[$method] : (!is_null(\Core\Config::get('access_role')) ? Core\Config::get('access_role') : \Core\Config::Core_get('access_role_default')));
 
 		if($role >= $access_role)
 		{
@@ -59,7 +59,7 @@ class Controller
 		}
 		else
 		{
-			FrontController::throwError(403);
+			exit('FORBIDDEN');
 		}
 	}
 

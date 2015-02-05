@@ -9,7 +9,7 @@ class Home extends \Core\Controller
 		// delete /private/cache/access/{namespace/class}.access.php to apply modifications in prod mode
 
 		$this->setDefaultAccessRole(1);
-		$this->setAccessRoleException('anyIndexAction', 1);
+		$this->setAccessRoleException('anyIndexAction', 0);
 		$this->setAccessRoleException('anyDataAction', 0);
 		$this->setAccessRoleException('anyTestHmvcAction', 0);
 		$this->setAccessRoleException('anyXnxxAction', 0);
