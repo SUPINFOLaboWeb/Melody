@@ -1,5 +1,5 @@
 <?php $expiration_mode = 'on_demand'; $cache = array (
   'action' => 'redirect',
-  'recursive' => true,
-  'domain' => 'blop',
+  'recursive' => false,
+  'domain' => 'deux.niveaux',
 ); ?>

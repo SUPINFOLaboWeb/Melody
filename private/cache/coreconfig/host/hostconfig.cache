@@ -27,7 +27,7 @@
     '/' => 
     array (
       'action' => 'redirect',
-      'recursive' => true,
+      'recursive' => false,
       'domain' => 'www',
     ),
     '/admin' => 
@@ -38,7 +38,7 @@
     ),
     '/test' => 
     array (
-      'action' => 'none',
+      'action' => 'redirect',
       'recursive' => false,
       'domain' => 'deux.niveaux',
     ),
@@ -47,6 +47,33 @@
       'action' => 'redirect',
       'recursive' => true,
       'domain' => 'blop',
+    ),
+  ),
+  'base_config' => 
+  array (
+    'domain' => 
+    array (
+      '_' => 
+      array (
+      ),
+    ),
+    'path' => 
+    array (
+      '/' => 
+      array (
+        'action' => 'redirect',
+        'recursive' => true,
+        'domain' => '',
+      ),
+    ),
+    'base_config' => 
+    array (
+      'domain' => 
+      array (
+      ),
+      'path' => 
+      array (
+      ),
     ),
   ),
 ); ?>

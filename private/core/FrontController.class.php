@@ -143,7 +143,7 @@ class FrontController
 
 			return $data;
 		}
-	}
+	}	
 
 	static function applyHostConfiguration($data)
 	{

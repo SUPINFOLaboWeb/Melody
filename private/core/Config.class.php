@@ -62,9 +62,10 @@ class Config
 				}
 				else
 				{
-					self::$hosts = array('domain' => array(), 'path'=>array());
+					self::$hosts = array('domain' => array(), 'path'=>array(), 'base_config' => array('domain' => array(), 'path' => array()));
 					self::$hosts['domain']['_'] 			= array();
 					self::$hosts['path']['/'] 				= array('action' => 'redirect', 'recursive' => true, 'domain' => '');
+					self::$hosts['base_config']				=  self::$hosts;
 
 					foreach($vars as $key => $var)
 					{
@@ -80,7 +81,7 @@ class Config
 			}
 		}
 	}
-
+		
 	static function loadFor($apps)
 	{	
 		if(empty(self::$app_config))
@@ -167,12 +168,24 @@ class Config
 			$path = array_filter($path);
 
 			$config = array();
+
+			if(isset( self::$hosts['base_config']['path']['/']))
+			{
+				$bufferedconfig = self::$hosts['base_config']['path']['/'];
+				if($bufferedconfig['recursive'])
+						$config = $bufferedconfig;
+
+			}
+
 			if(isset(self::$hosts['path']['/']))
 				$bufferedconfig = self::$hosts['path']['/'];
+				if($bufferedconfig['recursive'])
+						$config = $bufferedconfig;
 
 			while($key = array_shift($path))
 			{
 				$bufferedpath .= '/'.$key;
+
 				if(isset(self::$hosts['path'][$bufferedpath]))
 				{
 					$isLast = true;
