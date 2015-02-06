@@ -8,6 +8,10 @@ class Request
 	private $attributes 		= array();
 	private $args 				= array();
 	private static $instance 	= null;
+	public $protocol 			= '';
+	public $host 				= '';
+	public $urn 				= '';
+	public $uri					= '';
 
 	private function __construct()
 	{
@@ -30,6 +34,20 @@ class Request
 				$_SESSION[\Core\Config::Core_get('flash_varname')]['old'] = $_SESSION[\Core\Config::Core_get('flash_varname')]['new'];
 				$_SESSION[\Core\Config::Core_get('flash_varname')]['new'] = array();
 			}
+
+
+			self::$instance->protocol 	= strtolower(explode('/', $_SERVER['SERVER_PROTOCOL'])[0]);
+			self::$instance->host 		= $_SERVER['HTTP_HOST'];
+			self::$instance->urn		= $_SERVER['REQUEST_URI'];
+			self::$instance->uri 		= self::$instance->protocol.'://'.self::$instance->host.self::$instance->urn;
+			self::$instance->url 		= self::$instance->protocol.'://'.self::$instance->host;
+
+			if(!isset($_SESSION[\Core\Config::Core_get('history_varname')]))
+			{
+				$_SESSION[\Core\Config::Core_get('history_varname')] = array_fill(0, 10 , self::$instance->url);
+			}
+
+			self::$instance->addReferer(self::$instance->uri);
 		}
 
 		return self::$instance;
@@ -134,5 +152,16 @@ class Request
 	public function &getAttribute($name)
 	{
 		return self::getInstance()->attributes[$name];
+	}
+
+	private function addReferer($uri)
+	{
+		array_pop($_SESSION[\Core\Config::Core_get('history_varname')]);
+		array_unshift($_SESSION[\Core\Config::Core_get('history_varname')], $uri);
+	}
+
+	public function getReferer($num)
+	{
+		return $_SESSION[\Core\Config::Core_get('history_varname')][$num];
 	}
 }

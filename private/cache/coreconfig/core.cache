@@ -6,4 +6,5 @@
   'session_flash_varname' => 'flash',
   'session_content_varname' => 'vars',
   'session_attribute_varname' => 'attributes',
+  'session_history_varname' => 'referers',
 ); ?>

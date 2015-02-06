@@ -13,6 +13,7 @@
 		"error_varname" : "error",
 		"flash_varname" : "flash",
 		"content_varname" : "vars",
-		"attribute_varname" : "attributes"
+		"attribute_varname" : "attributes",
+		"history_varname" : "referers"
 	}
 }
