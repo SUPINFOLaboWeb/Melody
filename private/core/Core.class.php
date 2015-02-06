@@ -49,7 +49,6 @@ class Core
 
 	static function class2path($class)
 	{
-		//var_dump($class);
 		$old 	= $path 	= str_replace('\\', DIRECTORY_SEPARATOR, $class);
 		$path 				= explode('\\', $class);
 		$class 				= array_pop($path);

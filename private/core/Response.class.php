@@ -24,7 +24,7 @@ class Response
 
 	public function setHeader($key, $value)
 	{
-		header($key.': '.$value);
+		header($key.': '.$value.'; charset=utf-8');
 		return $this;
 	}
 

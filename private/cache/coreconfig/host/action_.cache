@@ -1,5 +1,6 @@
 <?php $expiration_mode = 'on_demand'; $cache = array (
   'action' => 'redirect',
   'recursive' => false,
-  'domain' => 'deux.niveaux',
+  'domain' => 'www.melody3.tld',
+  'full_domain' => false,
 ); ?>

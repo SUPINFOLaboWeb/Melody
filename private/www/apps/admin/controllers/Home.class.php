@@ -18,20 +18,18 @@ class Home extends \Core\Controller
 	public function anyIndexAction($req, $res)
 	{
 		echo('Bienvenue sur l\'espace d\'administration');
-		return $res->setView('blop');
+		return $res->setView('blop')->setHeader('Content-Type', 'text/plain');
 	}
 
 	public function anyDataAction($req, $res)
 	{
-		var_dump(\Core\Data::invoke('\www\models\User')->test());
+		echo(\Core\Data::invoke('\www\models\User')->test());
 		return $res->setView('blop', array());
 	}
 
 	public function anyTestHmvcAction($req, $res)
 	{
 		\www\controllers\Home::invoke('test', $req);
-		var_dump($req);
-
 		return $res->setView('blop', array());
 	}
 

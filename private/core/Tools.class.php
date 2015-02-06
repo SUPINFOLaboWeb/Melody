@@ -138,4 +138,19 @@ class Tools
 			Tools::values2dimensions($values, $arr[$e]);
 		}
 	}
+
+	static function method_exists($class, $method)
+	{
+		return method_exists($class, $method) || method_exists($class, '__call');
+	}
+
+	static function base64url_encode($data)
+	{
+		return rtrim(strtr(base64_encode($data), '+/', '-_'), '='); 
+	}
+
+	static function base64url_decode($data)
+	{
+		return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT));
+	}
 }

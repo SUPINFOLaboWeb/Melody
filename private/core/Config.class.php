@@ -55,6 +55,7 @@ class Config
 			if(false === $cache = \Core\Cache::get('coreconfig/host', 'hostconfig'))
 			{
 				$vars = json_decode(file_get_contents(__DIR__.'/config/hosts.json'), true);
+				$host = implode('.', array_slice(explode('.', $_SERVER['HTTP_HOST']), -2));
 
 				if(is_null($vars))
 				{
@@ -63,14 +64,15 @@ class Config
 				else
 				{
 					self::$hosts = array('domain' => array(), 'path'=>array(), 'base_config' => array('domain' => array(), 'path' => array()));
-					self::$hosts['domain']['_'] 			= array();
-					self::$hosts['path']['/'] 				= array('action' => 'redirect', 'recursive' => true, 'domain' => '');
+					self::$hosts['domain']['_'.$host] 			= array();
+					self::$hosts['path']['/'] 				= array('action' => 'redirect', 'recursive' => true, 'domain' => $host, 'full_domain' => false);
 					self::$hosts['base_config']				=  self::$hosts;
 
 					foreach($vars as $key => $var)
 					{
-						self::$hosts['domain']['_'.$key] 	= array_filter(explode('/', substr($var['path'], 1)));
-						self::$hosts['path'][$var['path']] 	= array('action' => $var['action'], 'recursive' => $var['recursive'], 'domain' => $key);
+						$full_domain = (isset($var['full_domain']) && $var['full_domain']);
+						self::$hosts['domain'][$full_domain ? '_'.$key : ('_'.$key.'.'.$host)] 	= array_filter(explode('/', substr($var['path'], 1)));
+						self::$hosts['path'][$var['path']] 	= array('action' => $var['action'], 'recursive' => $var['recursive'], 'domain' => $full_domain ? $key : ($key.'.'.$host), 'full_domain' => $full_domain);
 					}
 					\Core\Cache::create('coreconfig/host', 'hostconfig', self::$hosts, 'on_demand');
 				}
@@ -199,7 +201,7 @@ class Config
 					$isLast = false;
 				}
 			}
-
+			
 			if($isLast)
 			{
 				\Core\Cache::create('coreconfig/host', $cachename, $bufferedconfig, 'on_demand');

@@ -48,7 +48,6 @@ class Controller
 				$__melody_response = call_user_func_array(array($this, $method), $args);
 				$buffer = ob_get_clean();
 
-				
 				echo self::execute_view($__melody_response, $buffer, $class);
 				
 			}
@@ -59,7 +58,7 @@ class Controller
 		}
 		else
 		{
-			exit('FORBIDDEN');
+			FrontController::throwError(403);
 		}
 	}
 
@@ -103,7 +102,7 @@ class Controller
 			}					
 			else
 			{
-				$path = Tools::pathfor(array_filter(FrontController::$apps), 'views'.DIRECTORY_SEPARATOR.$__melody_response->viewpath[0], '.php');
+				$path = Tools::pathfor(array_filter(!is_null(FrontController::$apps) ? FrontController::$apps : array()), 'views'.DIRECTORY_SEPARATOR.$__melody_response->viewpath[0], '.php');
 			}
 
 			ob_start();

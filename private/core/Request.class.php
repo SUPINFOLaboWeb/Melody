@@ -6,6 +6,7 @@ class Request
 {
 	private $session 			= null;
 	private $attributes 		= array();
+	private $args 				= array();
 	private static $instance 	= null;
 
 	private function __construct()
@@ -13,11 +14,12 @@ class Request
 		
 	}
 
-	public static function &getInstance()
+	public static function &getInstance($args=array())
 	{
 		if(is_null(self::$instance))
 		{
 			self::$instance = new Request();
+			self::$instance->args = $args;
 
 			if(!isset($_SESSION[\Core\Config::Core_get('flash_varname')]))
 			{
@@ -41,24 +43,64 @@ class Request
 			return self::getInstance()->$session;
 	}
 
-	public function getParameters($name)
+	public function getArg($name)
 	{
-		return $_REQUEST[$name];
+		return (isset(self::getInstance()->args[$name]) ? self::getInstance()->args[$name] : null);
 	}
 
-	public function getPostParameters($name)
+	public function getArgs()
 	{
-		return $_POST[$name];
+		return self::getInstance()->args;
 	}
 
-	public function getGetParameters($name)
+	public function getParameter($name)
 	{
-		return $_GET[$name];
+		return self::getInstance()->getVars('_REQUEST', $name);
 	}
 
-	public function getCookieParameters($name)
+	public function getParameters()
 	{
-		return $_COOKIE[$name];
+		return self::getInstance()->getVars('_REQUEST');
+	}
+
+	public function getPostParameter($name)
+	{
+		return self::getInstance()->getVar('_POST', $name);
+	}
+
+	public function getPostParameters()
+	{
+		return self::getInstance()->getVars('_POST');
+	}
+
+	public function getGetParameter($name)
+	{
+		return self::getInstance()->getVar('_GET', $name);
+	}
+
+	public function getGetParameters()
+	{
+		return self::getInstance()->getVars('_GET');
+	}
+
+	public function getCookieParameter($name)
+	{
+		return self::getInstance()->getVar('_COOKIE', $name);
+	}
+
+	public function getCookieParameters()
+	{
+		return self::getInstance()->getVars('_COOKIE');
+	}
+
+	private function getVar($varname, $key)
+	{
+		return (isset($$varname[$key]) ? $$varname[$key] : null);
+	}
+
+	private function getVars($varname)
+	{
+		return $$varname;
 	}
 
 	public function setFlash($name, $value, $type)

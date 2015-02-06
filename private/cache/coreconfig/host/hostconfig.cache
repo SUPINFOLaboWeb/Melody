@@ -1,25 +1,29 @@
 <?php $expiration_mode = 'on_demand'; $cache = array (
   'domain' => 
   array (
-    '_' => 
+    '_melody3.tld' => 
     array (
     ),
-    '_www' => 
+    '_www.melody3.tld' => 
     array (
     ),
-    '_admin' => 
+    '_admin.melody3.tld' => 
     array (
       0 => 'admin',
     ),
-    '_deux.niveaux' => 
+    '_deux.niveaux.melody3.tld' => 
     array (
       0 => 'test',
     ),
-    '_blop' => 
+    '_blop.melody3.tld' => 
     array (
       0 => 'admin',
       1 => 'test',
       2 => 'blop',
+    ),
+    '_otherdomain.tld' => 
+    array (
+      0 => 'kamui',
     ),
   ),
   'path' => 
@@ -28,32 +32,43 @@
     array (
       'action' => 'redirect',
       'recursive' => false,
-      'domain' => 'www',
+      'domain' => 'www.melody3.tld',
+      'full_domain' => false,
     ),
     '/admin' => 
     array (
       'action' => 'forbid',
       'recursive' => true,
-      'domain' => 'admin',
+      'domain' => 'admin.melody3.tld',
+      'full_domain' => false,
     ),
     '/test' => 
     array (
       'action' => 'redirect',
       'recursive' => false,
-      'domain' => 'deux.niveaux',
+      'domain' => 'deux.niveaux.melody3.tld',
+      'full_domain' => false,
     ),
     '/admin/test/blop' => 
     array (
       'action' => 'redirect',
       'recursive' => true,
-      'domain' => 'blop',
+      'domain' => 'blop.melody3.tld',
+      'full_domain' => false,
+    ),
+    '/kamui' => 
+    array (
+      'action' => 'redirect',
+      'recursive' => true,
+      'domain' => 'otherdomain.tld',
+      'full_domain' => true,
     ),
   ),
   'base_config' => 
   array (
     'domain' => 
     array (
-      '_' => 
+      '_melody3.tld' => 
       array (
       ),
     ),
@@ -63,7 +78,8 @@
       array (
         'action' => 'redirect',
         'recursive' => true,
-        'domain' => '',
+        'domain' => 'melody3.tld',
+        'full_domain' => false,
       ),
     ),
     'base_config' => 
