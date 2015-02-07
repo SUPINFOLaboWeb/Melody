@@ -7,6 +7,8 @@ class Core
 
 	static function init($dev=false)
 	{
+		session_start();
+
 		self::$root = dirname(dirname(__DIR__));
 		define('ROOT', self::$root);
 		define('DEV_ENV', $dev);
@@ -44,6 +46,8 @@ class Core
 		{
 			@\Core\Tools::rrmdir(ROOT.DIRECTORY_SEPARATOR.'private'.DIRECTORY_SEPARATOR.'cache');
 		}
+
+		include(__DIR__.DIRECTORY_SEPARATOR.'alias.php');
 		Config::Init();
 	}
 

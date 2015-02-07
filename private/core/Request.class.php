@@ -25,15 +25,13 @@ class Request
 			self::$instance = new Request();
 			self::$instance->args = $args;
 
-			if(!isset($_SESSION[\Core\Config::Core_get('flash_varname')]))
+			if(!isset($_SESSION[\Core\Config::Core_get('session_flash_varname')]))
 			{
-				$_SESSION[\Core\Config::Core_get('flash_varname')] = array('new' => array(), 'old' => array());
+				$_SESSION[\Core\Config::Core_get('session_flash_varname')] = array('new' => array(), 'old' => array());
 			}
-			else
-			{
-				$_SESSION[\Core\Config::Core_get('flash_varname')]['old'] = $_SESSION[\Core\Config::Core_get('flash_varname')]['new'];
-				$_SESSION[\Core\Config::Core_get('flash_varname')]['new'] = array();
-			}
+			$_SESSION[\Core\Config::Core_get('session_flash_varname')]['old'] = $_SESSION[\Core\Config::Core_get('flash_varname')]['new'];
+			$_SESSION[\Core\Config::Core_get('session_flash_varname')]['new'] = array();
+			
 
 
 			self::$instance->protocol 	= strtolower(explode('/', $_SERVER['SERVER_PROTOCOL'])[0]);
@@ -42,9 +40,9 @@ class Request
 			self::$instance->uri 		= self::$instance->protocol.'://'.self::$instance->host.self::$instance->urn;
 			self::$instance->url 		= self::$instance->protocol.'://'.self::$instance->host;
 
-			if(!isset($_SESSION[\Core\Config::Core_get('history_varname')]))
+			if(!isset($_SESSION[\Core\Config::Core_get('session_history_varname')]))
 			{
-				$_SESSION[\Core\Config::Core_get('history_varname')] = array_fill(0, 10 , self::$instance->url);
+				$_SESSION[\Core\Config::Core_get('session_history_varname')] = array_fill(0, 10 , self::$instance->url);
 			}
 
 			self::$instance->addReferer(self::$instance->uri);
@@ -156,12 +154,12 @@ class Request
 
 	private function addReferer($uri)
 	{
-		array_pop($_SESSION[\Core\Config::Core_get('history_varname')]);
-		array_unshift($_SESSION[\Core\Config::Core_get('history_varname')], $uri);
+		array_pop($_SESSION[\Core\Config::Core_get('session_history_varname')]);
+		array_unshift($_SESSION[\Core\Config::Core_get('session_history_varname')], $uri);
 	}
 
 	public function getReferer($num)
 	{
-		return $_SESSION[\Core\Config::Core_get('history_varname')][$num];
+		return $_SESSION[\Core\Config::Core_get('session_history_varname')][$num];
 	}
 }

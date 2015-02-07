@@ -33,7 +33,7 @@ class Config
 			
 				if(empty($vars))
 				{
-					\Core\Core::throwError(500, 'CoreConfig syntax error');
+					\Core\FrontController::throwError(500, 'Core config syntax error');
 				}
 				else
 				{
@@ -59,7 +59,7 @@ class Config
 
 				if(is_null($vars))
 				{
-					\Core\Core::throwError(500, 'Hosts config syntax error');
+					\Core\FrontController::throwError(500, 'Hosts config syntax error');
 				}
 				else
 				{

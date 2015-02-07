@@ -1,2 +1,0 @@
-<?php $expiration_mode = 'on_demand'; $cache = array (
-); ?>

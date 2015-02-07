@@ -1,6 +1,6 @@
 <?php $expiration_mode = 'on_demand'; $cache = array (
   'action' => 'redirect',
   'recursive' => false,
-  'domain' => 'www.melody3.tld',
+  'domain' => 'www.animal-hom.tld',
   'full_domain' => false,
 ); ?>

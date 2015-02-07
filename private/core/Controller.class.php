@@ -48,7 +48,7 @@ class Controller
 				$__melody_response = call_user_func_array(array($this, $method), $args);
 				$buffer = ob_get_clean();
 
-				echo self::execute_view($__melody_response, $buffer, $class);
+				echo self::execute_view($__melody_response, $buffer, $class, $args[0]);
 				
 			}
 			else
@@ -77,7 +77,7 @@ class Controller
 			$__melody_response = call_user_func_array(array($c, $method), $args);
 			$buffer = ob_get_clean();
 
-			return self::execute_view($__melody_response, $buffer, $class);
+			return self::execute_view($__melody_response, $buffer, $class, $req);
 		}
 		else
 		{
@@ -85,7 +85,7 @@ class Controller
 		}
 	}
 
-	private static function execute_view($__melody_response = null, $buffer, $class)
+	private static function execute_view($__melody_response = null, $buffer, $class, $req)
 	{
 		$__melody_response = (is_null($__melody_response) ? new \core\Response() : $__melody_response);
 
