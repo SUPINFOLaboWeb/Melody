@@ -14,9 +14,7 @@ class Request
 	public $uri					= '';
 
 	private function __construct()
-	{
-		
-	}
+	{}
 
 	public static function &getInstance($args=array())
 	{
@@ -158,8 +156,28 @@ class Request
 		array_unshift($_SESSION[\Core\Config::Core_get('session_history_varname')], $uri);
 	}
 
-	public function getReferer($num)
+	public function getReferer($num=0)
 	{
 		return $_SESSION[\Core\Config::Core_get('session_history_varname')][$num];
+	}
+
+	public function redirect($apps = array(), $controller='', $method='', $args=array())
+	{
+		FrontController::redirect($apps, $controller, $method, $args);
+	}
+
+	public function redirectController($class, $method, $args=array())
+	{
+		FrontController::redirectController($class, $method, $args);
+	}
+
+	public function redirectURL($url, $absolute=false, $external=false)
+	{
+		FrontController::redirectURL($url, $absolute, $external);
+	}
+
+	public function previous($num=1)
+	{
+		$this->redirectURL($this->getReferer($num), true, true);
 	}
 }
