@@ -1,21 +1,21 @@
 <?php $expiration_mode = 'on_demand'; $cache = array (
   'domain' => 
   array (
-    '_animal-hom.tld' => 
+    '_melody3.tld' => 
     array (
     ),
-    '_www.animal-hom.tld' => 
+    '_www.melody3.tld' => 
     array (
     ),
-    '_admin.animal-hom.tld' => 
+    '_admin.melody3.tld' => 
     array (
       0 => 'admin',
     ),
-    '_deux.niveaux.animal-hom.tld' => 
+    '_deux.niveaux.melody3.tld' => 
     array (
       0 => 'test',
     ),
-    '_blop.animal-hom.tld' => 
+    '_blop.melody3.tld' => 
     array (
       0 => 'admin',
       1 => 'test',
@@ -32,28 +32,28 @@
     array (
       'action' => 'redirect',
       'recursive' => false,
-      'domain' => 'www.animal-hom.tld',
+      'domain' => 'www.melody3.tld',
       'full_domain' => false,
     ),
     '/admin' => 
     array (
       'action' => 'forbid',
       'recursive' => true,
-      'domain' => 'admin.animal-hom.tld',
+      'domain' => 'admin.melody3.tld',
       'full_domain' => false,
     ),
     '/test' => 
     array (
       'action' => 'redirect',
       'recursive' => false,
-      'domain' => 'deux.niveaux.animal-hom.tld',
+      'domain' => 'deux.niveaux.melody3.tld',
       'full_domain' => false,
     ),
     '/admin/test/blop' => 
     array (
       'action' => 'redirect',
       'recursive' => true,
-      'domain' => 'blop.animal-hom.tld',
+      'domain' => 'blop.melody3.tld',
       'full_domain' => false,
     ),
     '/kamui' => 
@@ -68,7 +68,7 @@
   array (
     'domain' => 
     array (
-      '_animal-hom.tld' => 
+      '_melody3.tld' => 
       array (
       ),
     ),
@@ -78,7 +78,7 @@
       array (
         'action' => 'redirect',
         'recursive' => true,
-        'domain' => 'animal-hom.tld',
+        'domain' => 'melody3.tld',
         'full_domain' => false,
       ),
     ),

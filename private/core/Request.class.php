@@ -27,7 +27,7 @@ class Request
 			{
 				$_SESSION[\Core\Config::Core_get('session_flash_varname')] = array('new' => array(), 'old' => array());
 			}
-			$_SESSION[\Core\Config::Core_get('session_flash_varname')]['old'] = $_SESSION[\Core\Config::Core_get('flash_varname')]['new'];
+			$_SESSION[\Core\Config::Core_get('session_flash_varname')]['old'] = $_SESSION[\Core\Config::Core_get('session_flash_varname')]['new'];
 			$_SESSION[\Core\Config::Core_get('session_flash_varname')]['new'] = array();
 			
 
