@@ -69,7 +69,7 @@ class Request
 
 	public function getParameter($name)
 	{
-		return self::getInstance()->getVars('_REQUEST', $name);
+		return self::getInstance()->getVar('_REQUEST', $name);
 	}
 
 	public function getParameters()
@@ -109,11 +109,13 @@ class Request
 
 	private function getVar($varname, $key)
 	{
+		if($varname == '_REQUEST') return (isset($_REQUEST[$key]) ? $_REQUEST[$key] : null);
 		return (isset($$varname[$key]) ? $$varname[$key] : null);
 	}
 
 	private function getVars($varname)
 	{
+		if($varname == '_REQUEST') return $_REQUEST;
 		return $$varname;
 	}
 
@@ -179,5 +181,10 @@ class Request
 	public function previous($num=1)
 	{
 		$this->redirectURL($this->getReferer($num), true, true);
+	}
+
+	public function throwError($code, $msg='')
+	{
+		FrontController::throwError($code, $msg);
 	}
 }
