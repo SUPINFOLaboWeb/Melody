@@ -1,21 +1,18 @@
 <?php $expiration_mode = 'on_demand'; $cache = array (
   'domain' => 
   array (
-    '_melody3.tld' => 
+    '_dittycms.tld' => 
     array (
     ),
-    '_www.melody3.tld' => 
-    array (
-    ),
-    '_admin.melody3.tld' => 
+    '_admin.dittycms.tld' => 
     array (
       0 => 'admin',
     ),
-    '_deux.niveaux.melody3.tld' => 
+    '_deux.niveaux.dittycms.tld' => 
     array (
       0 => 'test',
     ),
-    '_blop.melody3.tld' => 
+    '_blop.dittycms.tld' => 
     array (
       0 => 'admin',
       1 => 'test',
@@ -31,29 +28,29 @@
     '/' => 
     array (
       'action' => 'redirect',
-      'recursive' => false,
-      'domain' => 'www.melody3.tld',
+      'recursive' => true,
+      'domain' => 'dittycms.tld',
       'full_domain' => false,
     ),
     '/admin' => 
     array (
       'action' => 'forbid',
       'recursive' => true,
-      'domain' => 'admin.melody3.tld',
+      'domain' => 'admin.dittycms.tld',
       'full_domain' => false,
     ),
     '/test' => 
     array (
       'action' => 'redirect',
       'recursive' => false,
-      'domain' => 'deux.niveaux.melody3.tld',
+      'domain' => 'deux.niveaux.dittycms.tld',
       'full_domain' => false,
     ),
     '/admin/test/blop' => 
     array (
       'action' => 'redirect',
       'recursive' => true,
-      'domain' => 'blop.melody3.tld',
+      'domain' => 'blop.dittycms.tld',
       'full_domain' => false,
     ),
     '/kamui' => 
@@ -68,7 +65,7 @@
   array (
     'domain' => 
     array (
-      '_melody3.tld' => 
+      '_dittycms.tld' => 
       array (
       ),
     ),
@@ -78,7 +75,7 @@
       array (
         'action' => 'redirect',
         'recursive' => true,
-        'domain' => 'melody3.tld',
+        'domain' => 'dittycms.tld',
         'full_domain' => false,
       ),
     ),
