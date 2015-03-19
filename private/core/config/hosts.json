@@ -1,0 +1,27 @@
+{
+	"admin" :
+	{
+		"path": "/admin",
+		"action": "forbid",
+		"recursive" : true
+	},
+	"deux.niveaux" :
+	{
+		"path": "/test",
+		"action": "redirect",
+		"recursive" : false
+	},
+	"blop" :
+	{
+		"path" : "/admin/test/blop",
+		"action" : "redirect",
+		"recursive" : true
+	},
+	"otherdomain.tld" :
+	{
+		"path" : "/kamui",
+		"action" : "redirect",
+		"recursive" : true,
+		"full_domain" : true
+	}
+}
